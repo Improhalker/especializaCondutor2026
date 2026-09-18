@@ -1,0 +1,85 @@
+<script setup>
+import { computed, onMounted, onBeforeUnmount, ref } from "vue";
+import { getCourses } from "../services/api";
+import CourseCard from "../components/CourseCard.vue";
+import LoadingState from "../components/LoadingState.vue";
+import PublicErrorState from "../components/PublicErrorState.vue";
+import { setPageSeo } from "../services/seo";
+const courses = ref([]);
+const categories = ref([]);
+const selected = ref("all");
+const error = ref("");
+const loading = ref(true);
+let active = true;
+onBeforeUnmount(() => {
+  active = false;
+});
+async function load() {
+  loading.value = true;
+  error.value = "";
+  try {
+    const data = await getCourses();
+    if (!active) return;
+    courses.value = data.courses;
+    categories.value = data.categories;
+    setPageSeo("courses");
+  } catch (e) {
+    if (!active) return;
+    error.value = e.message;
+    setPageSeo("error");
+  } finally {
+    loading.value = false;
+  }
+}
+onMounted(load);
+const visibleCourses = computed(() =>
+  selected.value === "all"
+    ? courses.value
+    : courses.value.filter(
+        (course) => course.category?.slug === selected.value,
+      ),
+);
+</script>
+<template>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">ENCONTRE A SUA ESPECIALIZAÇÃO</p>
+      <h1>Cursos para quem<br />vive a estrada.</h1>
+      <p>Informações objetivas para você escolher a capacitação que procura.</p>
+    </div>
+  </section>
+  <section class="section container">
+    <div class="filters">
+      <button
+        :class="{ active: selected === 'all' }"
+        :aria-pressed="selected === 'all'"
+        type="button"
+        @click="selected = 'all'"
+      >
+        Todos</button
+      ><button
+        v-for="category in categories"
+        :key="category.id"
+        :class="{ active: selected === category.slug }"
+        :aria-pressed="selected === category.slug"
+        type="button"
+        @click="selected = category.slug"
+      >
+        {{ category.name }}
+      </button>
+    </div>
+    <LoadingState v-if="loading" />
+    <PublicErrorState v-else-if="error" @retry="load" />
+    <p v-else-if="!visibleCourses.length" class="empty-catalog" role="status">
+      Nenhum curso disponível nesta seleção. Consulte outras categorias ou fale
+      com nossa equipe.
+    </p>
+    <div v-else class="course-grid">
+      <CourseCard
+        v-for="course in visibleCourses"
+        :key="course.id"
+        :course="course"
+      />
+    </div>
+  </section>
+</template>

@@ -1,0 +1,275 @@
+/* Acabamento público: escopo preserva os componentes administrativos. */
+.public-site {
+  overflow-wrap: anywhere;
+}
+.public-site :is(button, a, summary):focus-visible {
+  outline: 3px solid #136ab7;
+  outline-offset: 4px;
+}
+.public-site
+  :is(.course-hero, .hero, .site-footer, .cta-band, .course-aside)
+  :focus-visible {
+  outline-color: #8fc4f2;
+}
+.public-site
+  :is(.button, .menu-button, .footer-link, .filters button, .text-link) {
+  min-height: 44px;
+}
+.public-site .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+}
+.public-site
+  :is(
+    .hero-grid,
+    .course-hero-grid,
+    .course-layout,
+    .footer-grid,
+    .benefits-grid,
+    .course-grid,
+    .process-grid
+  )
+  > * {
+  min-width: 0;
+}
+.public-site img {
+  max-width: 100%;
+  height: auto;
+}
+.public-site .course-cover-image img {
+  height: 100%;
+}
+.public-site .course-cover-hero img {
+  height: 100%;
+}
+.public-site .site-header {
+  scroll-margin-top: 86px;
+}
+.public-site :is(section[id], main) {
+  scroll-margin-top: 100px;
+}
+.public-site .main-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.public-site .menu-button {
+  width: 44px;
+  flex-shrink: 0;
+}
+.public-site .main-nav {
+  max-height: calc(100dvh - 72px);
+  overflow-y: auto;
+}
+.public-site .course-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.public-site .course-card-body .text-link {
+  margin-top: auto;
+}
+.public-site .course-aside .eyebrow {
+  color: #8fc4f2;
+}
+.public-site .modality-selector button {
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 64px;
+}
+.public-site .modality-selector small {
+  white-space: normal;
+}
+.public-site .workload {
+  white-space: normal;
+}
+.public-site .faq summary {
+  min-height: 44px;
+  align-items: center;
+}
+.public-site .faq summary span {
+  flex-shrink: 0;
+}
+.public-site .footer-bottom {
+  padding-bottom: 32px;
+}
+.public-site .footer-grid a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.public-site .whatsapp-dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px max(16px, calc((100% - 1180px) / 2));
+  background: #fff;
+  border-top: 1px solid #dce5ed;
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+}
+.public-site .whatsapp-float {
+  position: static;
+  min-height: 48px;
+  background: #147d43;
+}
+.public-site .whatsapp-float svg {
+  width: 24px;
+  height: 24px;
+}
+.public-site .skip-link {
+  position: fixed;
+  top: 8px;
+  left: 12px;
+  z-index: 60;
+  padding: 12px;
+  background: white;
+  color: #0e3459;
+  transform: translateY(-160%);
+  border: 2px solid #136ab7;
+}
+.public-site .skip-link:focus {
+  transform: translateY(0);
+}
+.public-site {
+  padding-bottom: 0;
+}
+.public-site main {
+  padding-bottom: 76px;
+  margin-bottom: -76px;
+}
+.not-found {
+  min-height: 65vh;
+  padding-top: 64px;
+  padding-bottom: 80px;
+}
+.not-found-code {
+  display: block;
+  font:
+    800 clamp(4rem, 14vw, 8rem)/1 Manrope,
+    Arial,
+    sans-serif;
+  color: #136ab7;
+  margin-bottom: 24px;
+}
+.not-found h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  max-width: 850px;
+}
+.not-found p:not(.eyebrow) {
+  max-width: 600px;
+  color: #607285;
+}
+.button-secondary {
+  background: #fff;
+  color: #0e3459;
+}
+.button-secondary:hover {
+  background: #edf5fb;
+}
+.public-error {
+  padding: 48px 0;
+}
+.public-error h2 {
+  font-size: 1.6rem;
+}
+.public-error p {
+  color: #607285;
+}
+.public-site .empty-catalog {
+  padding: 32px 0;
+  color: #607285;
+}
+@media (max-width: 560px) {
+  .public-site .hero h1 {
+    font-size: clamp(2rem, 8.5vw, 2.55rem);
+  }
+  .public-site .course-hero h1 {
+    font-size: clamp(2rem, 8vw, 2.6rem);
+  }
+  .public-site .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .public-site .hero-actions .button {
+    width: 100%;
+  }
+  .public-site .course-card-body {
+    height: auto;
+  }
+  .public-site .whatsapp-float {
+    width: auto;
+    height: auto;
+    padding: 10px 16px;
+    border-radius: 8px;
+  }
+  .public-site .whatsapp-float small {
+    display: inline;
+  }
+  .public-site .whatsapp-dock {
+    justify-content: stretch;
+  }
+  .public-site .whatsapp-dock button {
+    width: 100%;
+  }
+  .public-site .modality-footer .button {
+    width: 100%;
+  }
+  .public-site .course-layout {
+    padding-bottom: 48px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .public-site *,
+  .public-site *::before,
+  .public-site *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+/* A faixa de atendimento ocupa espaço próprio e nunca encobre o conteúdo. */
+.public-site {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+.public-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+.public-site .whatsapp-dock {
+  position: relative;
+  flex-shrink: 0;
+  bottom: auto;
+}
+.public-site main {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-scroll {
+    scroll-behavior: auto;
+  }
+}
+
+.public-site .course-card {
+  display: flex;
+  flex-direction: column;
+}
+.public-site .course-cover-image {
+  flex-shrink: 0;
+}
+.public-site .course-cover-hero {
+  max-height: 400px;
+  aspect-ratio: 16 / 9;
+}
