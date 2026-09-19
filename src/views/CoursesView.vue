@@ -2,11 +2,13 @@
 import { computed, onMounted, onBeforeUnmount, ref } from "vue";
 import { getCourses } from "../services/api";
 import CourseCard from "../components/CourseCard.vue";
+import HeroSection from "../components/HeroSection.vue";
 import LoadingState from "../components/LoadingState.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
 import { setPageSeo } from "../services/seo";
 const courses = ref([]);
 const categories = ref([]);
+const hero = ref(null);
 const selected = ref("all");
 const error = ref("");
 const loading = ref(true);
@@ -22,6 +24,7 @@ async function load() {
     if (!active) return;
     courses.value = data.courses;
     categories.value = data.categories;
+    hero.value = data.hero;
     setPageSeo("courses");
   } catch (e) {
     if (!active) return;
@@ -41,13 +44,13 @@ const visibleCourses = computed(() =>
 );
 </script>
 <template>
-  <section class="page-hero">
+  <HeroSection class="page-hero motion-hero" :appearance="hero">
     <div class="container">
       <p class="eyebrow">ENCONTRE A SUA ESPECIALIZAÇÃO</p>
       <h1>Cursos para quem<br />vive a estrada.</h1>
       <p>Informações objetivas para você escolher a capacitação que procura.</p>
     </div>
-  </section>
+  </HeroSection>
   <section class="section container">
     <div class="filters">
       <button
@@ -76,9 +79,10 @@ const visibleCourses = computed(() =>
     </p>
     <div v-else class="course-grid">
       <CourseCard
-        v-for="course in visibleCourses"
+        v-for="(course, index) in visibleCourses"
         :key="course.id"
         :course="course"
+        v-reveal="{ delay: (index % 3) * 90 }"
       />
     </div>
   </section>

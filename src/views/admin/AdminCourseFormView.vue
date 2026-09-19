@@ -1,9 +1,11 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from "vue";
 import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
-import { ChevronDown, ChevronUp, Eye, Plus, Trash2 } from "lucide-vue-next";
+import { ChevronDown, ChevronUp, Plus, Trash2 } from "lucide-vue-next";
+import WhatsAppIcon from "../../components/WhatsAppIcon.vue";
 import AdminPageHeader from "../../components/admin/AdminPageHeader.vue";
 import MediaPicker from "../../components/admin/media/MediaPicker.vue";
+import HeroEditor from "../../components/admin/HeroEditor.vue";
 import AdminState from "../../components/admin/AdminState.vue";
 import {
   createAdminCourse,
@@ -21,6 +23,7 @@ const saving = ref(false);
 const error = ref("");
 const categories = ref([]);
 const seoOpen = ref(false);
+const heroOpen = ref(false);
 const slugEdited = ref(false);
 const isDirty = ref(false);
 const blankModality = (name, sortOrder) => ({
@@ -47,6 +50,14 @@ const form = reactive({
   cover_media_id: null,
   cover_media: null,
   cover_alt_text: "",
+  hero_enabled: false,
+  hero_media_id: null,
+  hero_mobile_media_id: null,
+  hero_media: null,
+  hero_mobile_media: null,
+  hero_image_position: "center",
+  hero_overlay_preset: "institutional",
+  hero_overlay_opacity: 75,
   requirements: [""],
   is_featured: false,
   is_published: false,
@@ -74,6 +85,10 @@ function selectedMedia(media) {
 function markDirty() {
   isDirty.value = true;
 }
+function updateHero(patch) {
+  Object.assign(form, patch);
+  markDirty();
+}
 function updateSlug() {
   if (!slugEdited.value) form.slug = slugify(form.name);
   markDirty();
@@ -100,7 +115,7 @@ function loadCourse(course) {
   isDirty.value = false;
 }
 function payload(isPublished) {
-  const { cover_media, cover, created_at, updated_at, ...attributes } = form;
+  const { cover_media, cover, hero_media, hero_mobile_media, created_at, updated_at, ...attributes } = form;
   return {
     ...attributes,
     category_id: form.category_id || null,
@@ -157,6 +172,8 @@ async function save(isPublished) {
   } catch (requestError) {
     error.value =
       requestError.errors?.cover_media_id?.[0] ||
+      requestError.errors?.hero_media_id?.[0] ||
+      requestError.errors?.hero_mobile_media_id?.[0] ||
       requestError.errors?.cover_alt_text?.[0] ||
       requestError.errors?.name?.[0] ||
       requestError.errors?.slug?.[0] ||
@@ -329,6 +346,26 @@ onMounted(async () => {
       </div>
     </section>
     <section class="form-card">
+      <button
+        class="form-card-toggle"
+        type="button"
+        :aria-expanded="heroOpen"
+        @click="heroOpen = !heroOpen"
+      >
+        <span><strong>Hero da página do curso</strong><small>Banner de fundo independente da capa do curso.</small></span>
+        <ChevronUp v-if="heroOpen" :size="19" /><ChevronDown v-else :size="19" />
+      </button>
+      <HeroEditor
+        v-if="heroOpen"
+        :value="form"
+        :preview-title="form.name || 'Nome do curso'"
+        :preview-eyebrow="categories.find((item) => item.id === form.category_id)?.name || 'CURSO ESPECIALIZADO'"
+        variant="course-hero"
+        :course-name="form.name"
+        @update="updateHero"
+      />
+    </section>
+    <section class="form-card">
       <div class="form-card-heading">
         <div>
           <h2>Requisitos gerais</h2>
@@ -453,7 +490,7 @@ onMounted(async () => {
             ></textarea>
           </label>
           <div class="whatsapp-preview">
-            <Eye :size="16" /><span>{{
+            <WhatsAppIcon :size="16" /><span>{{
               modality.whatsapp_message ||
               `Olá! Tenho interesse no curso ${form.short_name || form.name || "X"} — ${modality.name}.`
             }}</span>

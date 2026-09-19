@@ -93,7 +93,7 @@ function uploadBusy(value) {
 }
 function select(media) {
   if (uploading.value) {
-    notice.value = "Aguarde os envios terminarem para selecionar a capa.";
+    notice.value = "Aguarde os envios terminarem para selecionar a imagem.";
     return;
   }
   emit("select", media);
@@ -314,19 +314,21 @@ onBeforeUnmount(() => {
       />
       <template v-else>
         <p v-if="usageTotal">
-          Esta imagem está vinculada a {{ usageTotal }} curso(s). Troque ou
-          remova as capas antes de excluí-la.
+          Esta imagem possui {{ usageTotal }} vínculo{{ usageTotal === 1 ? '' : 's' }}. Remova os
+          vínculos antes de excluí-la.
         </p>
         <p v-else>
           Excluir “{{ deleting?.original_name }}” da biblioteca e do
           armazenamento? Esta ação não pode ser desfeita.
         </p>
         <ul v-if="usages.length" class="media-usages">
-          <li v-for="course in usages" :key="course.id">
+          <li v-for="(usage, index) in usages" :key="`${usage.type}-${usage.id}-${usage.role}-${index}`">
             <RouterLink
-              :to="{ name: 'admin-course-edit', params: { id: course.id } }"
+              :to="usage.type === 'page'
+                ? { name: 'admin-appearance', query: { page: usage.page_key } }
+                : { name: 'admin-course-edit', params: { id: usage.id } }"
               @click="deleting = null"
-              >{{ course.name }}</RouterLink
+              >{{ usage.name }} · {{ usage.role }}</RouterLink
             >
           </li>
         </ul>

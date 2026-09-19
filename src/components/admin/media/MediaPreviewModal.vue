@@ -150,17 +150,19 @@ async function save() {
             :disabled="media.status !== 'ready'"
             @click="$emit('select', media)"
           >
-            <Check :size="16" />Usar como capa
+            <Check :size="16" />Usar imagem
           </button>
         </div>
         <section v-if="usageTotal" class="media-usages">
-          <h4>Em uso em {{ usageTotal }} curso(s)</h4>
+          <h4>Em uso em {{ usageTotal }} vínculo{{ usageTotal === 1 ? '' : 's' }}</h4>
           <ul>
-            <li v-for="course in usages" :key="course.id">
+            <li v-for="(usage, index) in usages" :key="`${usage.type}-${usage.id}-${usage.role}-${index}`">
               <RouterLink
-                :to="{ name: 'admin-course-edit', params: { id: course.id } }"
+                :to="usage.type === 'page'
+                  ? { name: 'admin-appearance', query: { page: usage.page_key } }
+                  : { name: 'admin-course-edit', params: { id: usage.id } }"
                 @click="$emit('close')"
-                >{{ course.name }}</RouterLink
+                >{{ usage.name }} · {{ usage.role }}</RouterLink
               >
             </li>
           </ul>

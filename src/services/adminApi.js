@@ -109,6 +109,14 @@ export const getSettings = () => request("/admin/settings");
 export const updateSettings = (payload) =>
   request("/admin/settings", { method: "PUT", body: JSON.stringify(payload) });
 
+export const getAdminPageAppearances = () =>
+  request("/admin/page-appearances");
+export const updateAdminPageAppearance = (pageKey, payload) =>
+  request(`/admin/page-appearances/${encodeURIComponent(pageKey)}`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
+
 function uploadRequest(path, options, headers) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();

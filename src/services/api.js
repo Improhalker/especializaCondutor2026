@@ -23,7 +23,7 @@ export async function getCourses() {
     ).values(),
   ];
 
-  return { courses, categories };
+  return { courses, categories, hero: payload.meta?.hero || null };
 }
 export async function getCourse(slug) {
   return (await request(`/courses/${encodeURIComponent(slug)}`)).data;

@@ -3,6 +3,8 @@ import { computed, onBeforeUnmount, ref, watch } from "vue";
 import { getCourse, trackWhatsAppClick, whatsappUrl } from "../services/api";
 import { setPageSeo } from "../services/seo";
 import MediaImage from "../components/admin/media/MediaImage.vue";
+import HeroSection from "../components/HeroSection.vue";
+import WhatsAppIcon from "../components/WhatsAppIcon.vue";
 import LoadingState from "../components/LoadingState.vue";
 import NotFoundView from "./NotFoundView.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
@@ -60,7 +62,7 @@ function talk() {
     <PublicErrorState @retry="load" />
   </div>
   <template v-else-if="course">
-    <section class="course-hero">
+    <HeroSection class="course-hero motion-hero" :appearance="course.hero">
       <div class="container course-hero-grid">
         <div>
           <RouterLink class="crumb" to="/cursos">← Todos os cursos</RouterLink>
@@ -83,7 +85,7 @@ function talk() {
           <span>{{ course.short_name || course.name }}</span>
         </div>
       </div>
-    </section>
+    </HeroSection>
     <section class="section container course-layout">
       <div class="course-main">
         <div v-if="course.requirements?.length" class="info-panel">
@@ -142,7 +144,7 @@ function talk() {
                 ><strong v-else>Fale com a equipe</strong>
               </div>
               <button class="button" type="button" @click="talk">
-                Conhecer condições
+                <WhatsAppIcon /> Conhecer condições
               </button>
             </div>
           </article>
@@ -163,7 +165,7 @@ function talk() {
           matrícula.
         </p>
         <button class="button button-full" type="button" @click="talk">
-          Chamar no WhatsApp
+          <WhatsAppIcon /> Chamar no WhatsApp
         </button>
       </aside>
     </section>

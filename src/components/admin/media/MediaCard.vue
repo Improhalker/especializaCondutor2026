@@ -72,7 +72,7 @@ defineEmits(["preview", "copy", "delete", "select"]);
           formatDate(media.created_at)
         }}</time
         ><span v-if="media.usage_count"
-          >Em {{ media.usage_count }} curso(s)</span
+          >Em uso ({{ media.usage_count }})</span
         ><span v-else>Disponível</span>
       </div>
       <p v-if="media.status !== 'ready'" class="text-danger">
@@ -92,7 +92,7 @@ defineEmits(["preview", "copy", "delete", "select"]);
         @click="$emit('select', media)"
       >
         <Check :size="16" />{{
-          selectedId === media.id ? "Selecionada" : "Usar como capa"
+          selectedId === media.id ? "Selecionada" : "Usar imagem"
         }}
       </button>
     </div>

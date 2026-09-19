@@ -11,6 +11,7 @@ import AdminCoursesView from "../views/admin/AdminCoursesView.vue";
 import AdminCourseFormView from "../views/admin/AdminCourseFormView.vue";
 import AdminAttendancesView from "../views/admin/AdminAttendancesView.vue";
 import AdminMediaView from "../views/admin/AdminMediaView.vue";
+import AdminAppearanceView from "../views/admin/AdminAppearanceView.vue";
 import AdminSettingsView from "../views/admin/AdminSettingsView.vue";
 import AdminInitialPasswordView from "../views/admin/AdminInitialPasswordView.vue";
 import { adminSession } from "../services/adminSession";
@@ -75,6 +76,12 @@ const router = createRouter({
           name: "admin-media",
           component: AdminMediaView,
           meta: { title: "Mídia" },
+        },
+        {
+          path: "aparencia",
+          name: "admin-appearance",
+          component: AdminAppearanceView,
+          meta: { title: "Aparência das páginas" },
         },
         {
           path: "atendimentos",

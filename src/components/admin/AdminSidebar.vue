@@ -6,6 +6,7 @@ import {
   ChevronRight,
   GraduationCap,
   LayoutDashboard,
+  PanelsTopLeft,
   Settings,
   X,
 } from "lucide-vue-next";
@@ -16,6 +17,7 @@ const links = [
   { name: "admin-dashboard", label: "Visão geral", icon: LayoutDashboard },
   { name: "admin-courses", label: "Cursos", icon: GraduationCap },
   { name: "admin-media", label: "Mídia", icon: Images },
+  { name: "admin-appearance", label: "Aparência das páginas", icon: PanelsTopLeft },
   { name: "admin-attendances", label: "Atendimentos", icon: BarChart3 },
   { name: "admin-settings", label: "Configurações", icon: Settings },
 ];

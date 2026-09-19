@@ -1,7 +1,7 @@
 <script setup>
 import { computed, nextTick, ref, watch } from "vue";
 import { RouterLink, RouterView, useRoute } from "vue-router";
-import { MessageCircle } from "lucide-vue-next";
+import WhatsAppIcon from "./components/WhatsAppIcon.vue";
 import { whatsappUrl, trackWhatsAppClick } from "./services/api";
 const route = useRoute();
 const menuOpen = ref(false);
@@ -84,7 +84,7 @@ watch(
               type="button"
               @click="openWhatsApp"
             >
-              Falar no WhatsApp
+              <WhatsAppIcon /> Falar no WhatsApp
             </button>
           </nav>
         </div>
@@ -114,7 +114,7 @@ watch(
           <div>
             <p class="footer-title">Atendimento</p>
             <button class="footer-link" type="button" @click="openWhatsApp">
-              WhatsApp: (19) 99906-5094
+              <WhatsAppIcon /> WhatsApp: (19) 99906-5094
             </button>
             <p class="muted">
               Consulte condições e requisitos com nossa equipe.
@@ -127,15 +127,13 @@ watch(
         </div>
       </footer>
     </div>
-    <div class="whatsapp-dock">
-      <button
-        class="whatsapp-float"
-        type="button"
-        aria-label="Falar no WhatsApp"
-        @click="openWhatsApp"
-      >
-        <MessageCircle aria-hidden="true" /><small>WhatsApp</small>
-      </button>
-    </div>
+    <button
+      class="whatsapp-float"
+      type="button"
+      aria-label="Tire suas dúvidas pelo WhatsApp"
+      @click="openWhatsApp"
+    >
+      <WhatsAppIcon :size="56" />
+    </button>
   </div>
 </template>

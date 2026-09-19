@@ -2,6 +2,9 @@
 import { onMounted, onBeforeUnmount, nextTick, ref } from "vue";
 import { getHome, whatsappUrl } from "../services/api";
 import CourseCard from "../components/CourseCard.vue";
+import HeroSection from "../components/HeroSection.vue";
+import ProcessJourney from "../components/ProcessJourney.vue";
+import WhatsAppIcon from "../components/WhatsAppIcon.vue";
 import LoadingState from "../components/LoadingState.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
 import { setPageSeo } from "../services/seo";
@@ -40,7 +43,7 @@ function talkAbout(course = "") {
 }
 </script>
 <template>
-  <section class="hero">
+  <HeroSection class="hero motion-hero" :appearance="data?.hero">
     <div class="container hero-grid">
       <div class="hero-copy">
         <p class="eyebrow light">CURSOS PARA MOTORISTAS</p>
@@ -61,21 +64,18 @@ function talkAbout(course = "") {
             type="button"
             @click="talkAbout()"
           >
-            Falar com um consultor
+            <WhatsAppIcon /> Falar com um consultor
           </button>
         </div>
         <div class="hero-pills">
-          <span>100% online</span><span>Atendimento pelo WhatsApp</span>
+          <span>100% online</span
+          ><span class="hero-whatsapp-pill"
+            ><WhatsAppIcon :size="18" /> Atendimento pelo WhatsApp</span
+          >
         </div>
       </div>
-      <div class="hero-visual" aria-hidden="true">
-        <div class="visual-ring"></div>
-        <div class="visual-road"></div>
-        <div class="visual-truck">▰</div>
-        <p>SEU PRÓXIMO<br />DESTINO É AQUI</p>
-      </div>
     </div>
-  </section>
+  </HeroSection>
   <LoadingState v-if="!data && !error" />
   <div v-else-if="error" class="container">
     <PublicErrorState @retry="load" />
@@ -100,9 +100,10 @@ function talkAbout(course = "") {
       </div>
       <div class="course-grid">
         <CourseCard
-          v-for="course in data.featured_courses"
+          v-for="(course, index) in data.featured_courses"
           :key="course.id"
           :course="course"
+          v-reveal="{ delay: (index % 3) * 90 }"
         />
       </div>
     </section>
@@ -146,23 +147,7 @@ function talkAbout(course = "") {
         <p class="eyebrow">COMO FUNCIONA</p>
         <h2>Da escolha do curso ao seu próximo passo.</h2>
       </div>
-      <div class="process-grid">
-        <article>
-          <span>1</span>
-          <h3>Escolha sua especialização</h3>
-          <p>Veja requisitos e compare Formação e Atualização.</p>
-        </article>
-        <article>
-          <span>2</span>
-          <h3>Chame no WhatsApp</h3>
-          <p>Nossa equipe orienta sobre condições e matrícula.</p>
-        </article>
-        <article>
-          <span>3</span>
-          <h3>Receba seu acesso</h3>
-          <p>Após a confirmação, você recebe tudo pelo WhatsApp.</p>
-        </article>
-      </div>
+      <ProcessJourney />
     </section>
     <section class="cta-band">
       <div class="container cta-inner">
@@ -171,7 +156,7 @@ function talkAbout(course = "") {
           <h2>Seu próximo curso<br />começa com uma conversa.</h2>
         </div>
         <button class="button button-white" type="button" @click="talkAbout()">
-          Falar no WhatsApp
+          <WhatsAppIcon /> Falar no WhatsApp
         </button>
       </div>
     </section>

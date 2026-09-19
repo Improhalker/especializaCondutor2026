@@ -1,8 +1,11 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+import { reveal } from "./directives/reveal";
 import "./styles/main.css";
 import "./styles/admin.css";
 import "./styles/media.css";
 import "./styles/public.css";
-createApp(App).use(router).mount("#app");
+import "./styles/hero.css";
+import "./styles/motion.css";
+createApp(App).directive("reveal", reveal).use(router).mount("#app");
