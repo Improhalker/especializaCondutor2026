@@ -306,3 +306,91 @@
   max-height: 400px;
   aspect-ratio: 16 / 9;
 }
+
+/* Superfície da página de curso: mais acolhedora sem competir com o conteúdo. */
+.public-site .course-surface {
+  background:
+    linear-gradient(180deg, #f2f7fb 0, #f8fbfd 420px, #f5f8fb 100%);
+}
+.public-site .course-surface .course-layout {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.public-site .course-content {
+  padding: 34px;
+  border: 1px solid #d9e6f0;
+  border-radius: 16px;
+  background: rgb(255 255 255 / 0.72);
+  box-shadow: 0 16px 40px rgb(14 52 89 / 0.05);
+}
+.public-site .info-panel {
+  border: 1px solid #d5e6f3;
+  box-shadow: 0 12px 30px rgb(14 52 89 / 0.04);
+}
+.public-site .modality-selector {
+  padding: 6px;
+  border: 1px solid #cfdfeb;
+  border-radius: 14px;
+  background: #e7f1f8;
+  gap: 6px;
+}
+.public-site .modality-selector button {
+  min-height: 68px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #36566f;
+  font-weight: 600;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+.public-site .modality-selector button:hover:not(.selected) {
+  background: rgb(255 255 255 / 0.72);
+  border-color: #bdd3e3;
+}
+.public-site .modality-selector button.selected {
+  border-color: #0e3459;
+  background: #136ab7;
+  color: #fff;
+  box-shadow: 0 7px 16px rgb(14 52 89 / 0.18);
+}
+.public-site .modality-selector button.selected small {
+  color: #e9f5ff;
+}
+.public-site .modality-selector button:focus-visible {
+  outline: 3px solid #0e3459;
+  outline-offset: 3px;
+}
+.public-site .modality-detail {
+  background: #fff;
+  border-color: #d6e3ec;
+  box-shadow: 0 14px 34px rgb(14 52 89 / 0.05);
+}
+.public-site .modality-price {
+  max-width: 330px;
+}
+.public-site .modality-price small {
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.public-site .course-faq {
+  padding: 42px 34px 0;
+  margin-top: 28px;
+  border: 1px solid #d9e6f0;
+  border-radius: 16px;
+  background: rgb(255 255 255 / 0.72);
+}
+@media (max-width: 560px) {
+  .public-site .course-content {
+    padding: 24px;
+    border-radius: 14px;
+  }
+  .public-site .course-faq {
+    padding: 30px 24px 0;
+    border-radius: 14px;
+  }
+}

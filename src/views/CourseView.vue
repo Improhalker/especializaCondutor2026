@@ -15,6 +15,15 @@ const error = ref(false);
 const notFound = ref(false);
 const selectedModality = ref(null);
 let generation = 0;
+function sortModalities(modalities = []) {
+  return [...modalities].sort((first, second) => {
+    const firstPriority =
+      first.name?.toLocaleLowerCase("pt-BR") === "formação" ? 0 : 1;
+    const secondPriority =
+      second.name?.toLocaleLowerCase("pt-BR") === "formação" ? 0 : 1;
+    return firstPriority - secondPriority;
+  });
+}
 async function load() {
   const current = ++generation;
   course.value = null;
@@ -26,7 +35,7 @@ async function load() {
     const result = await getCourse(props.slug);
     if (current !== generation) return;
     course.value = result;
-    selectedModality.value = result.modalities?.[0]?.id;
+    selectedModality.value = sortModalities(result.modalities)[0]?.id || null;
     setPageSeo("course", result);
   } catch (failure) {
     if (current !== generation) return;
@@ -42,6 +51,7 @@ onBeforeUnmount(() => generation++);
 const modality = computed(() =>
   course.value?.modalities?.find((item) => item.id === selectedModality.value),
 );
+const orderedModalities = computed(() => sortModalities(course.value?.modalities));
 function talk() {
   if (!course.value) return;
   const current = modality.value;
@@ -86,7 +96,8 @@ function talk() {
         </div>
       </div>
     </HeroSection>
-    <section class="section container course-layout">
+    <section class="section course-surface">
+      <div class="container course-layout">
       <div class="course-main">
         <div v-if="course.requirements?.length" class="info-panel">
           <p class="eyebrow">REQUISITOS PARA MATRÍCULA</p>
@@ -102,7 +113,7 @@ function talk() {
           <p>Selecione a opção que corresponde ao seu momento profissional.</p>
           <div class="modality-selector">
             <button
-              v-for="item in course.modalities"
+              v-for="item in orderedModalities"
               :key="item.id"
               :class="{ selected: item.id === selectedModality }"
               :aria-pressed="item.id === selectedModality"
@@ -116,12 +127,9 @@ function talk() {
           <article v-if="modality" class="modality-detail">
             <div class="modality-head">
               <div>
-                <p class="eyebrow">
-                  CURSO DE {{ modality.name.toUpperCase() }}
-                </p>
-                <h2>{{ course.name }}</h2>
+                <p class="eyebrow">{{ modality.name.toUpperCase() }}</p>
+                <h2>O que está incluído</h2>
               </div>
-              <span class="workload">{{ modality.workload }}</span>
             </div>
             <p>{{ modality.description }}</p>
             <ul class="check-list">
@@ -134,17 +142,16 @@ function talk() {
               >
             </div>
             <div class="modality-footer">
-              <div>
+              <div class="modality-price">
                 <small>{{
                   modality.price_label || "Condições especiais para matrícula"
                 }}</small
                 ><strong v-if="modality.price_mode === 'visible'">{{
                   modality.price
-                }}</strong
-                ><strong v-else>Fale com a equipe</strong>
+                }}</strong>
               </div>
               <button class="button" type="button" @click="talk">
-                <WhatsAppIcon /> Conhecer condições
+                <WhatsAppIcon /> Falar no WhatsApp
               </button>
             </div>
           </article>
@@ -168,6 +175,7 @@ function talk() {
           <WhatsAppIcon /> Chamar no WhatsApp
         </button>
       </aside>
+      </div>
     </section>
   </template>
 </template>
