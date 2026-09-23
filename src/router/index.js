@@ -9,10 +9,15 @@ import AdminLoginView from "../views/admin/AdminLoginView.vue";
 import AdminDashboardView from "../views/admin/AdminDashboardView.vue";
 import AdminCoursesView from "../views/admin/AdminCoursesView.vue";
 import AdminCourseFormView from "../views/admin/AdminCourseFormView.vue";
+import AdminTestimonialsView from "../views/admin/AdminTestimonialsView.vue";
+import AdminTestimonialFormView from "../views/admin/AdminTestimonialFormView.vue";
+import AdminFaqsView from "../views/admin/AdminFaqsView.vue";
+import AdminFaqFormView from "../views/admin/AdminFaqFormView.vue";
 import AdminAttendancesView from "../views/admin/AdminAttendancesView.vue";
 import AdminMediaView from "../views/admin/AdminMediaView.vue";
 import AdminAppearanceView from "../views/admin/AdminAppearanceView.vue";
 import AdminSettingsView from "../views/admin/AdminSettingsView.vue";
+import AdminLogsView from "../views/admin/AdminLogsView.vue";
 import AdminInitialPasswordView from "../views/admin/AdminInitialPasswordView.vue";
 import { adminSession } from "../services/adminSession";
 
@@ -72,6 +77,44 @@ const router = createRouter({
           meta: { title: "Editar curso" },
         },
         {
+          path: "depoimentos",
+          name: "admin-testimonials",
+          component: AdminTestimonialsView,
+          meta: { title: "Depoimentos" },
+        },
+        {
+          path: "depoimentos/novo",
+          name: "admin-testimonial-new",
+          component: AdminTestimonialFormView,
+          meta: { title: "Novo depoimento" },
+        },
+        {
+          path: "depoimentos/:id/editar",
+          name: "admin-testimonial-edit",
+          component: AdminTestimonialFormView,
+          props: true,
+          meta: { title: "Editar depoimento" },
+        },
+        {
+          path: "faqs",
+          name: "admin-faqs",
+          component: AdminFaqsView,
+          meta: { title: "FAQs" },
+        },
+        {
+          path: "faqs/nova",
+          name: "admin-faq-new",
+          component: AdminFaqFormView,
+          meta: { title: "Nova FAQ" },
+        },
+        {
+          path: "faqs/:id/editar",
+          name: "admin-faq-edit",
+          component: AdminFaqFormView,
+          props: true,
+          meta: { title: "Editar FAQ" },
+        },
+        {
           path: "midias",
           name: "admin-media",
           component: AdminMediaView,
@@ -94,6 +137,12 @@ const router = createRouter({
           name: "admin-settings",
           component: AdminSettingsView,
           meta: { title: "Configurações" },
+        },
+        {
+          path: "logs",
+          name: "admin-logs",
+          component: AdminLogsView,
+          meta: { title: "Logs" },
         },
       ],
     },

@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "date": "2026-09-22",
+    "content": "Implementado sistema de logs/changelog: JSON em public/logs.json, nova pagina Admin > Logs e instrucoes no AGENTS.md para agentes registrarem alteracoes relevantes."
+  },
+  {
+    "id": 2,
+    "date": "2026-09-22",
+    "content": "Corrigida a estabilidade da conexão local do Laravel com o Supabase, com suporte configurável a pooler transacional e conexão persistente."
+  },
+  {
+    "id": 3,
+    "date": "2026-09-22",
+    "content": "Corrigido o endpoint /api/home para exibir as Perguntas Frequentes cadastradas em Admin > Configurações, que antes eram ignoradas e substituídas por um conteúdo fixo."
+  },
+  {
+    "id": 4,
+    "date": "2026-09-22",
+    "content": "Atualizadas as referências regulatórias do site com a Resolução CONTRAN nº 1.020/2025, a Portaria SENATRAN nº 923/2025 e a parceria com a IBAC Brasil."
+  },
+  {
+    "id": 5,
+    "date": "2026-09-22",
+    "content": "Criado o módulo de Depoimentos: carrossel público responsivo na Home (com fallback institucional) e gerenciamento completo no painel administrativo (cadastro, edição, ordenação, publicação e exclusão)."
+  },
+  {
+    "id": 6,
+    "date": "2026-09-22",
+    "content": "Criado o módulo de FAQs reutilizáveis: biblioteca administrativa de perguntas aplicáveis a todos os cursos ou a cursos selecionados, combinadas automaticamente com as FAQs individuais na página pública de cada curso (com deduplicação priorizando a pergunta individual). A FAQ da Home e as FAQs individuais dos cursos continuam funcionando exatamente como antes."
+  },
+  {
+    "id": 7,
+    "date": "2026-09-22",
+    "content": "Adicionada uma regra operacional para impedir múltiplas instâncias locais do Laravel, encerrar servidores temporários e manter apenas o backend oficial do Especializa na porta 8000."
+  },
+  {
+    "id": 8,
+    "date": "2026-09-22",
+    "content": "Removido o padding externo do rodapé público para eliminar o espaço excedente antes da seção de confiança regulatória."
+  },
+  {
+    "id": 9,
+    "date": "2026-09-22",
+    "content": "Aplicadas no Supabase as migrations dos módulos de Depoimentos e FAQs reutilizáveis, corrigindo a listagem e o upload da biblioteca de mídia."
+  }
+]

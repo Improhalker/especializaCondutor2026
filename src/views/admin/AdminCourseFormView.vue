@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from "vue";
-import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
+import { RouterLink, onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 import { ChevronDown, ChevronUp, Plus, Trash2 } from "lucide-vue-next";
 import WhatsAppIcon from "../../components/WhatsAppIcon.vue";
 import AdminPageHeader from "../../components/admin/AdminPageHeader.vue";
@@ -533,7 +533,11 @@ onMounted(async () => {
       <div class="form-card-heading">
         <div>
           <h2>Perguntas frequentes do curso</h2>
-          <p>Adicione apenas dúvidas relevantes a esta especialização.</p>
+          <p>
+            Estas perguntas são exclusivas deste curso. Perguntas reutilizáveis são
+            administradas no módulo
+            <RouterLink :to="{ name: 'admin-faqs' }">FAQs</RouterLink>.
+          </p>
         </div>
         <button class="text-button" type="button" @click="addFaq">
           <Plus :size="16" />Adicionar pergunta
@@ -559,6 +563,12 @@ onMounted(async () => {
             <Trash2 :size="16" />Remover
           </button>
         </div>
+      </div>
+      <div v-if="form.shared_faqs?.length" class="readonly-faq-list">
+        <p class="input-hint">FAQs reutilizáveis aplicáveis a este curso:</p>
+        <span v-for="faq in form.shared_faqs" :key="faq.id" class="tag" :class="{ 'draft-tag': !faq.is_published }">
+          {{ faq.question }}{{ faq.is_published ? "" : " (rascunho)" }}
+        </span>
       </div>
     </section>
   </form>

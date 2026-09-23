@@ -5,7 +5,10 @@ import {
   ChevronLeft,
   ChevronRight,
   GraduationCap,
+  HelpCircle,
+  History,
   LayoutDashboard,
+  MessageSquareQuote,
   PanelsTopLeft,
   Settings,
   X,
@@ -16,10 +19,13 @@ defineEmits(["toggle", "close"]);
 const links = [
   { name: "admin-dashboard", label: "Visão geral", icon: LayoutDashboard },
   { name: "admin-courses", label: "Cursos", icon: GraduationCap },
+  { name: "admin-testimonials", label: "Depoimentos", icon: MessageSquareQuote },
+  { name: "admin-faqs", label: "FAQs", icon: HelpCircle },
   { name: "admin-media", label: "Mídia", icon: Images },
   { name: "admin-appearance", label: "Aparência das páginas", icon: PanelsTopLeft },
   { name: "admin-attendances", label: "Atendimentos", icon: BarChart3 },
   { name: "admin-settings", label: "Configurações", icon: Settings },
+  { name: "admin-logs", label: "Logs", icon: History },
 ];
 </script>
 

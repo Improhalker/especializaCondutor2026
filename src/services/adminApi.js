@@ -109,6 +109,50 @@ export const getSettings = () => request("/admin/settings");
 export const updateSettings = (payload) =>
   request("/admin/settings", { method: "PUT", body: JSON.stringify(payload) });
 
+export const getAdminTestimonials = (params = {}) =>
+  request(
+    `/admin/testimonials?${new URLSearchParams(Object.entries(params).filter(([, value]) => value !== "" && value !== null && value !== undefined)).toString()}`,
+  );
+export const getAdminTestimonial = (id) =>
+  request(`/admin/testimonials/${id}`);
+export const createAdminTestimonial = (payload) =>
+  request("/admin/testimonials", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+export const updateAdminTestimonial = (id, payload) =>
+  request(`/admin/testimonials/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
+export const updateTestimonialPublication = (id, is_published) =>
+  request(`/admin/testimonials/${id}/publication`, {
+    method: "PATCH",
+    body: JSON.stringify({ is_published }),
+  });
+export const deleteAdminTestimonial = (id) =>
+  request(`/admin/testimonials/${id}`, { method: "DELETE" });
+
+export const getAdminFaqs = (params = {}) =>
+  request(
+    `/admin/faqs?${new URLSearchParams(Object.entries(params).filter(([, value]) => value !== "" && value !== null && value !== undefined)).toString()}`,
+  );
+export const getAdminFaq = (id) => request(`/admin/faqs/${id}`);
+export const createAdminFaq = (payload) =>
+  request("/admin/faqs", { method: "POST", body: JSON.stringify(payload) });
+export const updateAdminFaq = (id, payload) =>
+  request(`/admin/faqs/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
+export const updateFaqPublication = (id, is_published) =>
+  request(`/admin/faqs/${id}/publication`, {
+    method: "PATCH",
+    body: JSON.stringify({ is_published }),
+  });
+export const deleteAdminFaq = (id) =>
+  request(`/admin/faqs/${id}`, { method: "DELETE" });
+
 export const getAdminPageAppearances = () =>
   request("/admin/page-appearances");
 export const updateAdminPageAppearance = (pageKey, payload) =>
