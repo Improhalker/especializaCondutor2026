@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onBeforeUnmount, ref, watch } from "vue";
+import { BadgeCheck } from "lucide-vue-next";
 import { getCourse, trackWhatsAppClick, whatsappUrl } from "../services/api";
 import { setPageSeo } from "../services/seo";
 import MediaImage from "../components/admin/media/MediaImage.vue";
@@ -155,6 +156,15 @@ function talk() {
               </button>
             </div>
           </article>
+          <div class="course-regulatory-note">
+            <BadgeCheck :size="24" aria-hidden="true" />
+            <p>
+              <strong>Curso ofertado em parceria com a IBAC Brasil.</strong>
+              A instituição parceira é homologada pela SENATRAN. Conteúdos e
+              cargas horárias seguem a Resolução CONTRAN nº 1.020/2025 e a
+              Portaria SENATRAN nº 923/2025.
+            </p>
+          </div>
         </div>
         <section v-if="course.faqs?.length" class="faq course-faq">
           <h2>Perguntas sobre este curso</h2>
@@ -168,8 +178,8 @@ function talk() {
         <p class="eyebrow">PRECISA DE AJUDA?</p>
         <h3>Fale com um consultor.</h3>
         <p>
-          Estamos prontos para orientar você sobre curso, modalidade e
-          matrícula.
+          Estamos prontos para orientar você sobre modalidade, requisitos,
+          matrícula e etapas de registro.
         </p>
         <button class="button button-full" type="button" @click="talk">
           <WhatsAppIcon /> Chamar no WhatsApp

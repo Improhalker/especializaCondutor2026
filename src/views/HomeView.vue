@@ -2,6 +2,7 @@
 import { onMounted, onBeforeUnmount, nextTick, ref } from "vue";
 import { getHome, whatsappUrl } from "../services/api";
 import CourseCard from "../components/CourseCard.vue";
+import TestimonialsSection from "../components/testimonials/TestimonialsSection.vue";
 import HeroSection from "../components/HeroSection.vue";
 import ProcessJourney from "../components/ProcessJourney.vue";
 import WhatsAppIcon from "../components/WhatsAppIcon.vue";
@@ -83,9 +84,9 @@ function talkAbout(course = "") {
   <template v-else-if="data">
     <section class="trust-strip">
       <div class="container trust-items">
-        <span>Aprenda no seu ritmo</span><span>•</span
-        ><span>Formação e atualização</span><span>•</span
-        ><span>Suporte humano</span>
+        <span>Parceria comercial IBAC Brasil</span><span>•</span
+        ><span>Cursos regulamentados</span><span>•</span
+        ><span>Orientação em cada etapa</span>
       </div>
     </section>
     <section class="section container">
@@ -107,6 +108,7 @@ function talkAbout(course = "") {
         />
       </div>
     </section>
+    <TestimonialsSection :testimonials="data.testimonials" />
     <section class="benefits">
       <div class="container benefits-grid">
         <div>

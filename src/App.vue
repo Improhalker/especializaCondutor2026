@@ -1,6 +1,7 @@
 <script setup>
 import { computed, nextTick, ref, watch } from "vue";
 import { RouterLink, RouterView, useRoute } from "vue-router";
+import RegulatoryTrust from "./components/RegulatoryTrust.vue";
 import WhatsAppIcon from "./components/WhatsAppIcon.vue";
 import { whatsappUrl, trackWhatsAppClick } from "./services/api";
 const route = useRoute();
@@ -91,6 +92,7 @@ watch(
       </header>
       <main id="conteudo-principal" tabindex="-1"><RouterView /></main>
       <footer class="site-footer">
+        <RegulatoryTrust />
         <div class="container footer-grid">
           <div>
             <img
@@ -102,8 +104,8 @@ watch(
               loading="lazy"
             />
             <p>
-              Cursos especializados para quem quer dirigir com mais preparo e
-              ampliar oportunidades.
+              Cursos especializados ofertados em parceria com a IBAC Brasil,
+              com atendimento próximo em cada etapa.
             </p>
           </div>
           <div>
