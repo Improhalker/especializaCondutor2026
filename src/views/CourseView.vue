@@ -6,9 +6,10 @@ import { setPageSeo } from "../services/seo";
 import MediaImage from "../components/admin/media/MediaImage.vue";
 import HeroSection from "../components/HeroSection.vue";
 import WhatsAppIcon from "../components/WhatsAppIcon.vue";
-import LoadingState from "../components/LoadingState.vue";
 import NotFoundView from "./NotFoundView.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
+import SkeletonHero from "../components/loading/SkeletonHero.vue";
+import SkeletonCourseDetails from "../components/loading/SkeletonCourseDetails.vue";
 const props = defineProps({ slug: { type: String, required: true } });
 const course = ref(null);
 const loading = ref(true);
@@ -67,12 +68,19 @@ function talk() {
 }
 </script>
 <template>
-  <LoadingState v-if="loading" />
+  <template v-if="loading">
+    <SkeletonHero />
+    <section class="section course-surface">
+      <div class="container">
+        <SkeletonCourseDetails />
+      </div>
+    </section>
+  </template>
   <NotFoundView v-else-if="notFound" />
   <div v-else-if="error" class="container">
     <PublicErrorState @retry="load" />
   </div>
-  <template v-else-if="course">
+  <div v-else-if="course" class="content-fade-in">
     <HeroSection class="course-hero motion-hero" :appearance="course.hero">
       <div class="container course-hero-grid">
         <div>
@@ -187,5 +195,5 @@ function talk() {
       </aside>
       </div>
     </section>
-  </template>
+  </div>
 </template>

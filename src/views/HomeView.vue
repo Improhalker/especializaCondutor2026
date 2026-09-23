@@ -6,8 +6,11 @@ import TestimonialsSection from "../components/testimonials/TestimonialsSection.
 import HeroSection from "../components/HeroSection.vue";
 import ProcessJourney from "../components/ProcessJourney.vue";
 import WhatsAppIcon from "../components/WhatsAppIcon.vue";
-import LoadingState from "../components/LoadingState.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
+import SkeletonBase from "../components/loading/SkeletonBase.vue";
+import SkeletonCourseGrid from "../components/loading/SkeletonCourseGrid.vue";
+import SkeletonTestimonials from "../components/loading/SkeletonTestimonials.vue";
+import SkeletonFaqList from "../components/loading/SkeletonFaqList.vue";
 import { setPageSeo } from "../services/seo";
 import { useRoute } from "vue-router";
 const route = useRoute();
@@ -77,11 +80,29 @@ function talkAbout(course = "") {
       </div>
     </div>
   </HeroSection>
-  <LoadingState v-if="!data && !error" />
+  <template v-if="!data && !error">
+    <section class="section container">
+      <div class="section-heading split" aria-hidden="true">
+        <div>
+          <SkeletonBase variant="text" width="150px" height="12px" style="margin-bottom: 15px" />
+          <SkeletonBase variant="text" width="70%" height="34px" />
+        </div>
+      </div>
+      <SkeletonCourseGrid :count="6" />
+    </section>
+    <SkeletonTestimonials />
+    <section class="section container faq" aria-hidden="true">
+      <div class="section-heading" style="text-align: center">
+        <SkeletonBase variant="text" width="160px" height="12px" style="margin: 0 auto 15px" />
+        <SkeletonBase variant="text" width="320px" height="30px" style="margin: 0 auto" />
+      </div>
+      <SkeletonFaqList :count="3" />
+    </section>
+  </template>
   <div v-else-if="error" class="container">
     <PublicErrorState @retry="load" />
   </div>
-  <template v-else-if="data">
+  <div v-else-if="data" class="content-fade-in">
     <section class="trust-strip">
       <div class="container trust-items">
         <span>Parceria comercial IBAC Brasil</span><span>•</span
@@ -172,5 +193,5 @@ function talkAbout(course = "") {
         <p>{{ faq.answer }}</p>
       </details>
     </section>
-  </template>
+  </div>
 </template>

@@ -3,8 +3,8 @@ import { computed, onMounted, onBeforeUnmount, ref } from "vue";
 import { getCourses } from "../services/api";
 import CourseCard from "../components/CourseCard.vue";
 import HeroSection from "../components/HeroSection.vue";
-import LoadingState from "../components/LoadingState.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
+import SkeletonCourseGrid from "../components/loading/SkeletonCourseGrid.vue";
 import { setPageSeo } from "../services/seo";
 const courses = ref([]);
 const categories = ref([]);
@@ -71,13 +71,13 @@ const visibleCourses = computed(() =>
         {{ category.name }}
       </button>
     </div>
-    <LoadingState v-if="loading" />
+    <SkeletonCourseGrid v-if="loading" :count="6" />
     <PublicErrorState v-else-if="error" @retry="load" />
     <p v-else-if="!visibleCourses.length" class="empty-catalog" role="status">
       Nenhum curso disponível nesta seleção. Consulte outras categorias ou fale
       com nossa equipe.
     </p>
-    <div v-else class="course-grid">
+    <div v-else class="course-grid content-fade-in">
       <CourseCard
         v-for="(course, index) in visibleCourses"
         :key="course.id"

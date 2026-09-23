@@ -209,3 +209,91 @@
     scroll-behavior: auto;
   }
 }
+
+/* Skeleton loading — páginas públicas */
+:root {
+  --skeleton-base: #e6eff7;
+  --skeleton-highlight: #f8fbfe;
+  --skeleton-border: #d8e5f0;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skeleton {
+  display: inline-block;
+  vertical-align: middle;
+  background-color: var(--skeleton-base);
+  border: 1px solid var(--skeleton-border);
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+.skeleton--text {
+  border-radius: 4px;
+}
+.skeleton--button {
+  border-radius: 8px;
+}
+.skeleton--circle {
+  border-radius: 50%;
+}
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    background-color: var(--skeleton-base);
+  }
+  50% {
+    background-color: var(--skeleton-highlight);
+  }
+}
+/* Fundos escuros (heróis navy): pulso em branco translúcido para manter contraste */
+.skeleton-on-dark {
+  --skeleton-base: rgb(255 255 255 / 0.14);
+  --skeleton-highlight: rgb(255 255 255 / 0.28);
+  --skeleton-border: rgb(255 255 255 / 0.22);
+}
+.skeleton-text-group {
+  display: grid;
+}
+.skeleton-modality-option {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.skeleton-faq-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  border-bottom: 1px solid var(--line);
+  padding: 19px 0;
+}
+.content-fade-in {
+  animation: content-fade-in 0.25s ease both;
+}
+@keyframes content-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background-color: var(--skeleton-base);
+  }
+  .content-fade-in {
+    animation: none;
+  }
+}
