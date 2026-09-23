@@ -1,5 +1,13 @@
 const API_URL = import.meta.env.VITE_API_URL || "/api";
 const WHATSAPP_NUMBER = "5519999065094";
+const apiOrigin = new URL(API_URL, window.location.href).origin;
+if (apiOrigin !== window.location.origin) {
+  const preconnect = document.createElement("link");
+  preconnect.rel = "preconnect";
+  preconnect.href = apiOrigin;
+  preconnect.crossOrigin = "anonymous";
+  document.head.append(preconnect);
+}
 async function request(path) {
   const response = await fetch(`${API_URL}${path}`, {
     headers: { Accept: "application/json" },

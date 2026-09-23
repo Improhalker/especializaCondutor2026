@@ -25,6 +25,7 @@ watch(
     :width="width || undefined"
     :height="height || undefined"
     :loading="eager ? 'eager' : 'lazy'"
+    :fetchpriority="eager ? 'high' : undefined"
     decoding="async"
     @error="failed = true"
   />
