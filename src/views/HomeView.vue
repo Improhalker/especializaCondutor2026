@@ -130,41 +130,6 @@ function talkAbout(course = "") {
       </div>
     </section>
     <TestimonialsSection :testimonials="data.testimonials" />
-    <section class="benefits">
-      <div class="container benefits-grid">
-        <div>
-          <p class="eyebrow">SIMPLIFICAMOS O CAMINHO</p>
-          <h2>Capacitação sem complicação.</h2>
-          <p>
-            Você encontra a modalidade certa, recebe orientação no WhatsApp e
-            segue com segurança em cada etapa.
-          </p>
-        </div>
-        <div class="benefit-list">
-          <div>
-            <b>01</b
-            ><span
-              ><strong>Escolha o curso</strong>Encontre a especialização que
-              atende sua necessidade.</span
-            >
-          </div>
-          <div>
-            <b>02</b
-            ><span
-              ><strong>Fale com a equipe</strong>Receba condições e orientações
-              pelo WhatsApp.</span
-            >
-          </div>
-          <div>
-            <b>03</b
-            ><span
-              ><strong>Comece sua jornada</strong>Conclua a matrícula e receba
-              seu acesso.</span
-            >
-          </div>
-        </div>
-      </div>
-    </section>
     <section id="como-funciona" class="section container process">
       <div class="section-heading">
         <p class="eyebrow">COMO FUNCIONA</p>

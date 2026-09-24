@@ -63,5 +63,10 @@
     "id": 13,
     "date": "2026-09-23",
     "content": "Otimizada a entrega das páginas de cursos e imagens com medições por etapa, cache local com invalidação administrativa, pré-aquecimento no Laravel e prioridade de carregamento da capa no Vue."
+  },
+  {
+    "id": 14,
+    "date": "2026-09-23",
+    "content": "Removida a seção duplicada \"Simplificamos o caminho\" da Home, mantendo apenas \"Como funciona\"; a linha de progresso dos passos agora anima em loop mais lento, com um pulse nos marcadores para dar mais movimento à seção."
   }
 ]
