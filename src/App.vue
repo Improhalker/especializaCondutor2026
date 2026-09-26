@@ -75,7 +75,8 @@ watch(
             @keydown.esc="closeMenu"
           >
             <RouterLink to="/">Início</RouterLink
-            ><RouterLink to="/cursos">Cursos</RouterLink>
+            ><RouterLink to="/cursos">Cursos</RouterLink
+            ><RouterLink to="/quem-somos">Quem somos</RouterLink>
             <a v-if="isHome" href="#como-funciona" @click="menuOpen = false"
               >Como funciona</a
             >
@@ -111,7 +112,8 @@ watch(
           <div>
             <p class="footer-title">Navegue</p>
             <RouterLink to="/">Início</RouterLink
-            ><RouterLink to="/cursos">Cursos</RouterLink>
+            ><RouterLink to="/cursos">Cursos</RouterLink
+            ><RouterLink to="/quem-somos">Quem somos</RouterLink>
           </div>
           <div>
             <p class="footer-title">Atendimento</p>
@@ -124,8 +126,11 @@ watch(
           </div>
         </div>
         <div class="container footer-bottom">
-          © {{ new Date().getFullYear() }} Especializa Condutor. Todos os
-          direitos reservados.
+          <span>© {{ new Date().getFullYear() }} Especializa Condutor. Todos os direitos reservados.</span>
+          <nav class="footer-legal" aria-label="Informações legais">
+            <RouterLink to="/politica-de-privacidade">Privacidade</RouterLink>
+            <RouterLink to="/termos-de-uso">Termos de Uso</RouterLink>
+          </nav>
         </div>
       </footer>
     </div>

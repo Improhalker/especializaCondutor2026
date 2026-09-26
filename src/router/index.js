@@ -4,6 +4,9 @@ import { setPageSeo } from "../services/seo";
 import HomeView from "../views/HomeView.vue";
 import CoursesView from "../views/CoursesView.vue";
 import CourseView from "../views/CourseView.vue";
+import AboutView from "../views/AboutView.vue";
+import PrivacyView from "../views/PrivacyView.vue";
+import TermsView from "../views/TermsView.vue";
 import AdminLayout from "../components/admin/AdminLayout.vue";
 import AdminLoginView from "../views/admin/AdminLoginView.vue";
 import AdminDashboardView from "../views/admin/AdminDashboardView.vue";
@@ -28,6 +31,9 @@ const router = createRouter({
     { path: "/:pathMatch(.*)*", name: "not-found", component: NotFoundView },
     { path: "/", name: "home", component: HomeView },
     { path: "/cursos", name: "courses", component: CoursesView },
+    { path: "/quem-somos", name: "about", component: AboutView },
+    { path: "/politica-de-privacidade", name: "privacy", component: PrivacyView },
+    { path: "/termos-de-uso", name: "terms", component: TermsView },
     {
       path: "/cursos/:slug",
       name: "course",

@@ -73,5 +73,15 @@
     "id": 15,
     "date": "2026-09-23",
     "content": "Corrigida a centralização do título \"Informação clara para você decidir.\" na seção de dúvidas frequentes da Home."
+  },
+  {
+    "id": 16,
+    "date": "2026-09-26",
+    "content": "Criada a página pública Quem Somos, apresentando a trajetória, o marco de mais de 70 inscrições acompanhadas, os diferenciais de atendimento e novos acessos na navegação."
+  },
+  {
+    "id": 17,
+    "date": "2026-09-26",
+    "content": "Criadas páginas públicas de Política de Privacidade e Termos de Uso com textos claros sobre dados, atendimento e cursos em parceria, links no rodapé e metadados para acesso direto."
   }
 ]

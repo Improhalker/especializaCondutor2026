@@ -3,6 +3,12 @@ const descriptions = {
   home: "Conheça os cursos do Especializa Condutor e fale com nossa equipe para esclarecer dúvidas e consultar condições.",
   courses:
     "Explore o catálogo de cursos do Especializa Condutor. Consulte informações, modalidades e requisitos de cada curso.",
+  about:
+    "Conheça a Especializa Condutor, nossa forma de atendimento e a jornada que já ajudou mais de 70 motoristas a avançarem em sua especialização.",
+  privacy:
+    "Saiba quais dados a Especializa Condutor usa na navegação e no atendimento, e como falar conosco sobre sua privacidade.",
+  terms:
+    "Entenda como funciona a vitrine de cursos da Especializa Condutor e o atendimento para matrícula pelo WhatsApp.",
   "not-found":
     "Esta página não foi encontrada ou não está mais disponível. Acesse o início ou explore nossos cursos.",
   error:
@@ -33,6 +39,9 @@ export function pageMetadata(page, course = null, origin = null) {
   const names = {
     home: "Cursos para motoristas",
     courses: "Cursos",
+    about: "Quem somos",
+    privacy: "Política de Privacidade",
+    terms: "Termos de Uso",
     "not-found": "Página não encontrada",
     error: "Não foi possível carregar a página",
     admin: "Administração",
@@ -57,6 +66,12 @@ export function pageMetadata(page, course = null, origin = null) {
       ? "/"
       : page === "courses"
         ? "/cursos"
+        : page === "about"
+          ? "/quem-somos"
+        : page === "privacy"
+          ? "/politica-de-privacidade"
+        : page === "terms"
+          ? "/termos-de-uso"
         : page === "course"
           ? `/cursos/${encodeURIComponent(course.slug)}`
           : null;
