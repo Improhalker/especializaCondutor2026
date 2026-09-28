@@ -787,11 +787,16 @@
 .public-site .regulatory-intro {
   display: grid;
   grid-template-columns: 112px minmax(0, 760px);
+  grid-template-areas:
+    "mark eyebrow"
+    "mark title"
+    "mark summary";
   align-items: center;
-  gap: 28px;
+  column-gap: 28px;
   margin-bottom: 34px;
 }
 .public-site .regulatory-mark {
+  grid-area: mark;
   display: grid;
   place-items: center;
   width: 112px;
@@ -806,13 +811,19 @@
   filter: brightness(0) invert(1);
   opacity: 0.92;
 }
+.public-site .regulatory-eyebrow {
+  grid-area: eyebrow;
+  margin-bottom: 10px;
+}
 .public-site .regulatory-intro h2 {
+  grid-area: title;
   max-width: 760px;
   margin-bottom: 14px;
   color: #fff;
   font-size: clamp(1.9rem, 3vw, 2.8rem);
 }
-.public-site .regulatory-intro > div > p:last-child {
+.public-site .regulatory-summary {
+  grid-area: summary;
   max-width: 760px;
   margin: 0;
   color: #c8dceb;
@@ -908,13 +919,29 @@
     padding: 48px 0 42px;
   }
   .public-site .regulatory-intro {
-    grid-template-columns: 72px minmax(0, 1fr);
-    gap: 18px;
+    grid-template-columns: 52px minmax(0, 1fr);
+    grid-template-areas:
+      "mark eyebrow"
+      "title title"
+      "summary summary";
+    column-gap: 14px;
+    row-gap: 12px;
+    align-items: center;
   }
   .public-site .regulatory-mark {
-    width: 72px;
-    padding: 11px;
-    border-radius: 18px;
+    width: 52px;
+    padding: 8px;
+    border-radius: 14px;
+  }
+  .public-site .regulatory-eyebrow {
+    margin: 0;
+  }
+  .public-site .regulatory-intro h2 {
+    margin: 0;
+    font-size: clamp(1.8rem, 7.2vw, 2.2rem);
+  }
+  .public-site .regulatory-summary {
+    margin: 0;
   }
   .public-site .regulatory-grid {
     grid-template-columns: 1fr;

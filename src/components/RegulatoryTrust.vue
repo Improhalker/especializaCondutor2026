@@ -35,17 +35,17 @@ const officialSources = [
             loading="lazy"
           />
         </div>
-        <div>
-          <p class="footer-title">CONFIANÇA E CONFORMIDADE</p>
-          <h2 id="regulatory-title">
-            Especialização alinhada às normas atuais de trânsito.
-          </h2>
-          <p>
-            A Especializa Condutor atua como parceira comercial da Access
-            IBACBrasil, entidade homologada pela SENATRAN para a oferta dos
-            cursos especializados divulgados aqui.
-          </p>
-        </div>
+        <p class="footer-title regulatory-eyebrow">
+          CONFIANÇA E CONFORMIDADE
+        </p>
+        <h2 id="regulatory-title">
+          Especialização alinhada às normas atuais de trânsito.
+        </h2>
+        <p class="regulatory-summary">
+          A Especializa Condutor atua como parceira comercial da Access
+          IBACBrasil, entidade homologada pela SENATRAN para a oferta dos
+          cursos especializados divulgados aqui.
+        </p>
       </div>
 
       <div class="regulatory-grid">
