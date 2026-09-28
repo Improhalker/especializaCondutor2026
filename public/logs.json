@@ -88,5 +88,10 @@
     "id": 18,
     "date": "2026-09-28",
     "content": "Melhorado o layout mobile da seção de confiança e conformidade: logo e rótulo ficam lado a lado, com título e descrição usando toda a largura."
+  },
+  {
+    "id": 19,
+    "date": "2026-09-28",
+    "content": "Adicionado o e-mail de contato da Especializa Condutor no rodapé, na Política de Privacidade e nos Termos de Uso."
   }
 ]

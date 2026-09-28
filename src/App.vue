@@ -120,6 +120,9 @@ watch(
             <button class="footer-link" type="button" @click="openWhatsApp">
               <WhatsAppIcon /> WhatsApp: (19) 99906-5094
             </button>
+            <a class="footer-link" href="mailto:especializacondutor@gmail.com">
+              especializacondutor@gmail.com
+            </a>
             <p class="muted">
               Consulte condições e requisitos com nossa equipe.
             </p>

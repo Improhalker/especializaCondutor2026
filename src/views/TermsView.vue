@@ -55,6 +55,8 @@
         <p>
           Se algo não estiver claro, fale conosco pelo
           <a href="https://wa.me/5519999065094" rel="noopener noreferrer">WhatsApp (19) 99906-5094</a>
+          ou pelo e-mail
+          <a href="mailto:especializacondutor@gmail.com">especializacondutor@gmail.com</a>
           antes de tomar uma decisão. Podemos atualizar estes termos quando o
           funcionamento do site mudar.
         </p>

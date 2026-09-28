@@ -62,6 +62,8 @@
           Você pode pedir informações sobre seus dados, correção ou exclusão,
           quando cabível. Para isso, fale conosco pelo
           <a href="https://wa.me/5519999065094" rel="noopener noreferrer">WhatsApp (19) 99906-5094</a>.
+          Você também pode escrever para
+          <a href="mailto:especializacondutor@gmail.com">especializacondutor@gmail.com</a>.
           Se passarmos a usar novos formulários ou ferramentas de análise, este
           texto será atualizado para explicar a mudança.
         </p>
