@@ -97,6 +97,9 @@
 .public-site .footer-bottom {
   padding-bottom: 32px;
 }
+.public-site .footer-grid {
+  grid-template-columns: 2fr 1fr 1.25fr 1.2fr;
+}
 .public-site .site-footer {
   padding: 0;
 }
@@ -1026,14 +1029,22 @@
   flex-wrap: wrap;
 }
 .public-site .footer-legal {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  justify-items: start;
+  gap: 9px;
 }
 .public-site .footer-legal a:hover {
   color: #fff;
 }
+@media (max-width: 900px) {
+  .public-site .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 @media (max-width: 560px) {
+  .public-site .footer-grid {
+    grid-template-columns: 1fr;
+  }
   .public-site .legal-hero {
     padding: 52px 0 46px;
   }

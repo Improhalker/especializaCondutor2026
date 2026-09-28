@@ -93,5 +93,10 @@
     "id": 19,
     "date": "2026-09-28",
     "content": "Adicionado o e-mail de contato da Especializa Condutor no rodapé, na Política de Privacidade e nos Termos de Uso."
+  },
+  {
+    "id": 20,
+    "date": "2026-09-28",
+    "content": "Destacados os links de Política de Privacidade e Termos de Uso em uma seção própria de Informações legais no rodapé."
   }
 ]

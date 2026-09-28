@@ -127,13 +127,18 @@ watch(
               Consulte condições e requisitos com nossa equipe.
             </p>
           </div>
+          <div>
+            <p class="footer-title">Informações legais</p>
+            <nav class="footer-legal" aria-label="Informações legais">
+              <RouterLink to="/politica-de-privacidade"
+                >Política de Privacidade</RouterLink
+              >
+              <RouterLink to="/termos-de-uso">Termos de Uso</RouterLink>
+            </nav>
+          </div>
         </div>
         <div class="container footer-bottom">
           <span>© {{ new Date().getFullYear() }} Especializa Condutor. Todos os direitos reservados.</span>
-          <nav class="footer-legal" aria-label="Informações legais">
-            <RouterLink to="/politica-de-privacidade">Privacidade</RouterLink>
-            <RouterLink to="/termos-de-uso">Termos de Uso</RouterLink>
-          </nav>
         </div>
       </footer>
     </div>
