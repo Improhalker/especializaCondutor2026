@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import NotFoundView from "../views/NotFoundView.vue";
 import { setPageSeo } from "../services/seo";
+import { INDEXABLE_PAGES } from "../services/publicPages";
 import HomeView from "../views/HomeView.vue";
 import CoursesView from "../views/CoursesView.vue";
 import CourseView from "../views/CourseView.vue";
@@ -29,11 +30,11 @@ const router = createRouter({
   scrollBehavior: () => ({ top: 0 }),
   routes: [
     { path: "/:pathMatch(.*)*", name: "not-found", component: NotFoundView },
-    { path: "/", name: "home", component: HomeView },
-    { path: "/cursos", name: "courses", component: CoursesView },
-    { path: "/quem-somos", name: "about", component: AboutView },
-    { path: "/politica-de-privacidade", name: "privacy", component: PrivacyView },
-    { path: "/termos-de-uso", name: "terms", component: TermsView },
+    { path: INDEXABLE_PAGES.home, name: "home", component: HomeView },
+    { path: INDEXABLE_PAGES.courses, name: "courses", component: CoursesView },
+    { path: INDEXABLE_PAGES.about, name: "about", component: AboutView },
+    { path: INDEXABLE_PAGES.privacy, name: "privacy", component: PrivacyView },
+    { path: INDEXABLE_PAGES.terms, name: "terms", component: TermsView },
     {
       path: "/cursos/:slug",
       name: "course",

@@ -113,5 +113,10 @@
     "id": 23,
     "date": "2026-09-29",
     "content": "Instalado o Google Analytics 4 no site público com a propriedade G-WLL03MT3BR."
+  },
+  {
+    "id": 24,
+    "date": "2026-09-29",
+    "content": "Criado sitemap XML dinâmico na Vercel com páginas públicas e cursos publicados, robots.txt e domínio canônico sem www."
   }
 ]

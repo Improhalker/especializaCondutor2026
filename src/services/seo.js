@@ -1,3 +1,5 @@
+import { INDEXABLE_PAGES, SITE_ORIGIN } from "./publicPages";
+
 const brand = "Especializa Condutor";
 const descriptions = {
   home: "Conheça os cursos do Especializa Condutor e fale com nossa equipe para esclarecer dúvidas e consultar condições.",
@@ -62,19 +64,9 @@ export function pageMetadata(page, course = null, origin = null) {
         `Conheça o curso ${course?.name} e consulte informações com a equipe do Especializa Condutor.`
       : descriptions[page] || "Administração do Especializa Condutor.";
   const path =
-    page === "home"
-      ? "/"
-      : page === "courses"
-        ? "/cursos"
-        : page === "about"
-          ? "/quem-somos"
-        : page === "privacy"
-          ? "/politica-de-privacidade"
-        : page === "terms"
-          ? "/termos-de-uso"
-        : page === "course"
-          ? `/cursos/${encodeURIComponent(course.slug)}`
-          : null;
+    page === "course"
+      ? `/cursos/${encodeURIComponent(course.slug)}`
+      : INDEXABLE_PAGES[page] || null;
   let image = null;
   const source =
     course?.cover?.url || (origin ? "/brand/especializa-condutor.png" : null);
@@ -116,7 +108,7 @@ export function setPageSeo(page, course = null) {
   const serverOrigin = document.head.querySelector(
     'meta[name="site-origin"]',
   )?.content;
-  const origin = publicOrigin(serverOrigin || import.meta.env.VITE_SITE_URL);
+  const origin = publicOrigin(serverOrigin || SITE_ORIGIN);
   const serverIndexable = document.head.querySelector(
     'meta[name="site-indexable"]',
   )?.content;
