@@ -103,5 +103,15 @@
     "id": 21,
     "date": "2026-09-28",
     "content": "Corrigido o cache em produção: a Home e a listagem de cursos não reaproveitavam nenhum cache e eram recalculadas a cada acesso; agora usam a mesma infraestrutura de cache já validada nos cursos individuais, com invalidação automática ao editar aparência, configurações e depoimentos, e cache do navegador para imagens ampliado de 5 minutos para 7 dias."
+  },
+  {
+    "id": 22,
+    "date": "2026-09-29",
+    "content": "Adicionado o perfil oficial do Instagram da Especializa Condutor ao rodapé, com ícone e acesso direto em nova aba."
+  },
+  {
+    "id": 23,
+    "date": "2026-09-29",
+    "content": "Instalado o Google Analytics 4 no site público com a propriedade G-WLL03MT3BR."
   }
 ]

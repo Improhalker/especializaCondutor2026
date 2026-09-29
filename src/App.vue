@@ -1,6 +1,7 @@
 <script setup>
 import { computed, nextTick, ref, watch } from "vue";
 import { RouterLink, RouterView, useRoute } from "vue-router";
+import { Instagram } from "lucide-vue-next";
 import RegulatoryTrust from "./components/RegulatoryTrust.vue";
 import WhatsAppIcon from "./components/WhatsAppIcon.vue";
 import { whatsappUrl, trackWhatsAppClick } from "./services/api";
@@ -122,6 +123,16 @@ watch(
             </button>
             <a class="footer-link" href="mailto:especializacondutor@gmail.com">
               especializacondutor@gmail.com
+            </a>
+            <a
+              class="footer-link"
+              href="https://www.instagram.com/especializacondutor/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram da Especializa Condutor (abre em nova aba)"
+            >
+              <Instagram :size="20" aria-hidden="true" />
+              @especializacondutor
             </a>
             <p class="muted">
               Consulte condições e requisitos com nossa equipe.

@@ -113,6 +113,9 @@
   align-items: center;
   gap: 8px;
 }
+.public-site a.footer-link:hover {
+  color: #fff;
+}
 .public-site .hero-whatsapp-pill {
   display: inline-flex;
   align-items: center;
