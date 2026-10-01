@@ -2,9 +2,8 @@
 import { onMounted, onBeforeUnmount, nextTick, ref } from "vue";
 import { getHome, whatsappUrl } from "../services/api";
 import CourseCard from "../components/CourseCard.vue";
-import TestimonialsSection from "../components/testimonials/TestimonialsSection.vue";
+import CourseSupportSections from "../components/CourseSupportSections.vue";
 import HeroSection from "../components/HeroSection.vue";
-import ProcessJourney from "../components/ProcessJourney.vue";
 import WhatsAppIcon from "../components/WhatsAppIcon.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
 import SkeletonBase from "../components/loading/SkeletonBase.vue";
@@ -129,34 +128,9 @@ function talkAbout(course = "") {
         />
       </div>
     </section>
-    <TestimonialsSection :testimonials="data.testimonials" />
-    <section id="como-funciona" class="section container process">
-      <div class="section-heading">
-        <p class="eyebrow">COMO FUNCIONA</p>
-        <h2>Da escolha do curso ao seu próximo passo.</h2>
-      </div>
-      <ProcessJourney />
-    </section>
-    <section class="cta-band">
-      <div class="container cta-inner">
-        <div>
-          <p class="eyebrow light">PRONTO PARA AVANÇAR?</p>
-          <h2>Seu próximo curso<br />começa com uma conversa.</h2>
-        </div>
-        <button class="button button-white" type="button" @click="talkAbout()">
-          <WhatsAppIcon /> Falar no WhatsApp
-        </button>
-      </div>
-    </section>
-    <section class="section container faq">
-      <div class="section-heading">
-        <p class="eyebrow">DÚVIDAS FREQUENTES</p>
-        <h2>Informação clara para você decidir.</h2>
-      </div>
-      <details v-for="faq in data.faqs" :key="faq.id">
-        <summary>{{ faq.question }} <span>+</span></summary>
-        <p>{{ faq.answer }}</p>
-      </details>
-    </section>
+    <CourseSupportSections
+      :testimonials="data.testimonials"
+      :faqs="data.faqs"
+    />
   </div>
 </template>

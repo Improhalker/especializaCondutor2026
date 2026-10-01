@@ -1,7 +1,8 @@
 <script setup>
 import { computed, onMounted, onBeforeUnmount, ref } from "vue";
-import { getCourses } from "../services/api";
+import { getCourses, getHome } from "../services/api";
 import CourseCard from "../components/CourseCard.vue";
+import CourseSupportSections from "../components/CourseSupportSections.vue";
 import HeroSection from "../components/HeroSection.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
 import SkeletonCourseGrid from "../components/loading/SkeletonCourseGrid.vue";
@@ -12,6 +13,9 @@ const hero = ref(null);
 const selected = ref("all");
 const error = ref("");
 const loading = ref(true);
+const supportContent = ref(null);
+const supportLoading = ref(true);
+const supportError = ref("");
 let active = true;
 onBeforeUnmount(() => {
   active = false;
@@ -34,7 +38,24 @@ async function load() {
     loading.value = false;
   }
 }
-onMounted(load);
+async function loadSupportContent() {
+  supportLoading.value = true;
+  supportError.value = "";
+  try {
+    const data = await getHome();
+    if (!active) return;
+    supportContent.value = data;
+  } catch (e) {
+    if (!active) return;
+    supportError.value = e.message;
+  } finally {
+    if (active) supportLoading.value = false;
+  }
+}
+onMounted(() => {
+  load();
+  loadSupportContent();
+});
 const visibleCourses = computed(() =>
   selected.value === "all"
     ? courses.value
@@ -86,4 +107,11 @@ const visibleCourses = computed(() =>
       />
     </div>
   </section>
+  <CourseSupportSections
+    :testimonials="supportContent?.testimonials"
+    :faqs="supportContent?.faqs"
+    :loading="supportLoading"
+    :error="supportError"
+    @retry="loadSupportContent"
+  />
 </template>

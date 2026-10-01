@@ -128,5 +128,10 @@
     "id": 26,
     "date": "2026-10-01",
     "content": "Corrigidos os indicadores do carrossel de depoimentos para refletirem as posições disponíveis em cada largura de tela e alcançarem o último grupo."
+  },
+  {
+    "id": 27,
+    "date": "2026-10-01",
+    "content": "Reutilizadas na listagem de cursos as seções da Home de depoimentos, Como funciona, atendimento pelo WhatsApp e FAQs gerais, com carregamento independente do catálogo e opção de tentar novamente."
   }
 ]
