@@ -123,5 +123,10 @@
     "id": 25,
     "date": "2026-10-01",
     "content": "Corrigido o cadastro de FAQs para aceitar a lista vazia de cursos quando a pergunta vale para todos, mantendo a exigência de seleção no modo específico. O painel agora permite salvar uma FAQ e abrir outra logo abaixo, sem voltar à listagem."
+  },
+  {
+    "id": 26,
+    "date": "2026-10-01",
+    "content": "Corrigidos os indicadores do carrossel de depoimentos para refletirem as posições disponíveis em cada largura de tela e alcançarem o último grupo."
   }
 ]

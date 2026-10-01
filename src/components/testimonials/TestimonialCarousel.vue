@@ -12,12 +12,14 @@ const props = defineProps({
 const trackRef = ref(null);
 const cardRefs = ref([]);
 const activeIndex = ref(0);
+const positions = ref([]);
 const reducedMotion = ref(false);
 const paused = ref(false);
 const isTouching = ref(false);
 let mediaQuery = null;
 let autoplayTimer = null;
 let scrollEndTimer = null;
+let resizeObserver = null;
 
 function setCardRef(el, index) {
   if (el) cardRefs.value[index] = el;
@@ -29,14 +31,30 @@ function updateReducedMotion() {
 
 function scrollToIndex(index, behavior = reducedMotion.value ? "auto" : "smooth") {
   const track = trackRef.value;
-  const card = cardRefs.value[index];
-  if (!track || !card) return;
-  track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior });
+  const position = positions.value[index];
+  if (!track || !position) return;
+  track.scrollTo({ left: position.left, behavior });
 }
 
 function clampIndex(index) {
-  const max = props.items.length - 1;
+  const max = positions.value.length - 1;
   return Math.max(0, Math.min(max, index));
+}
+
+function refreshPositions() {
+  const track = trackRef.value;
+  if (!track) return;
+
+  const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+  const nextPositions = [];
+  cardRefs.value.forEach((card, slideIndex) => {
+    if (!card) return;
+    const left = Math.min(maxScroll, Math.max(0, card.offsetLeft - track.offsetLeft));
+    if (nextPositions.every((position) => Math.abs(position.left - left) > 2))
+      nextPositions.push({ left, slideIndex });
+  });
+  positions.value = nextPositions;
+  syncActiveIndexFromScroll();
 }
 
 function goTo(index) {
@@ -45,10 +63,10 @@ function goTo(index) {
 }
 
 function next() {
-  goTo(activeIndex.value + 1 >= props.items.length ? 0 : activeIndex.value + 1);
+  goTo(activeIndex.value + 1 >= positions.value.length ? 0 : activeIndex.value + 1);
 }
 function prev() {
-  goTo(activeIndex.value - 1 < 0 ? props.items.length - 1 : activeIndex.value - 1);
+  goTo(activeIndex.value - 1 < 0 ? positions.value.length - 1 : activeIndex.value - 1);
 }
 
 function syncActiveIndexFromScroll() {
@@ -56,9 +74,8 @@ function syncActiveIndexFromScroll() {
   if (!track) return;
   let closest = 0;
   let closestDistance = Infinity;
-  cardRefs.value.forEach((card, index) => {
-    if (!card) return;
-    const distance = Math.abs(card.offsetLeft - track.offsetLeft - track.scrollLeft);
+  positions.value.forEach((position, index) => {
+    const distance = Math.abs(position.left - track.scrollLeft);
     if (distance < closestDistance) {
       closestDistance = distance;
       closest = index;
@@ -84,7 +101,7 @@ function scheduleAutoplay() {
     !props.autoplay ||
     reducedMotion.value ||
     paused.value ||
-    props.items.length <= 1 ||
+    positions.value.length <= 1 ||
     document.visibilityState !== "visible"
   )
     return;
@@ -114,18 +131,22 @@ function onKeydown(event) {
     pause();
   } else if (event.key === "End") {
     event.preventDefault();
-    goTo(props.items.length - 1);
+    goTo(positions.value.length - 1);
     pause();
   }
 }
 
 watch(() => [paused.value, reducedMotion.value], scheduleAutoplay);
+watch(() => positions.value.length, scheduleAutoplay);
 watch(
   () => props.items.length,
   () => {
     cardRefs.value = [];
     activeIndex.value = 0;
-    nextTick(() => scrollToIndex(0, "auto"));
+    nextTick(() => {
+      refreshPositions();
+      scrollToIndex(0, "auto");
+    });
   },
 );
 
@@ -135,11 +156,15 @@ onMounted(async () => {
   mediaQuery.addEventListener("change", updateReducedMotion);
   document.addEventListener("visibilitychange", onVisibilityChange);
   await nextTick();
+  refreshPositions();
+  resizeObserver = new ResizeObserver(refreshPositions);
+  if (trackRef.value) resizeObserver.observe(trackRef.value);
   scheduleAutoplay();
 });
 onBeforeUnmount(() => {
   clearTimeout(autoplayTimer);
   clearTimeout(scrollEndTimer);
+  resizeObserver?.disconnect();
   mediaQuery?.removeEventListener("change", updateReducedMotion);
   document.removeEventListener("visibilitychange", onVisibilityChange);
 });
@@ -149,7 +174,7 @@ onBeforeUnmount(() => {
   <div class="testimonial-carousel" @mouseenter="pause" @mouseleave="resume">
     <div class="testimonial-carousel-viewport">
       <button
-        v-if="items.length > 1"
+        v-if="positions.length > 1"
         class="testimonial-nav prev"
         type="button"
         aria-label="Depoimento anterior"
@@ -192,7 +217,7 @@ onBeforeUnmount(() => {
         </div>
       </div>
       <button
-        v-if="items.length > 1"
+        v-if="positions.length > 1"
         class="testimonial-nav next"
         type="button"
         aria-label="Próximo depoimento"
@@ -202,19 +227,19 @@ onBeforeUnmount(() => {
       </button>
     </div>
     <div
-      v-if="items.length > 1"
+      v-if="positions.length > 1"
       class="testimonial-dots"
       role="group"
       aria-label="Selecionar depoimento"
     >
       <button
-        v-for="(item, index) in items"
-        :key="item.id"
+        v-for="(position, index) in positions"
+        :key="position.slideIndex"
         type="button"
         class="testimonial-dot"
         :class="{ active: index === activeIndex }"
         :aria-current="index === activeIndex ? 'true' : undefined"
-        :aria-label="`Ir para depoimento ${index + 1} de ${items.length}`"
+        :aria-label="`Ir para grupo de depoimentos ${index + 1} de ${positions.length}`"
         @click="goTo(index); pause();"
       ></button>
     </div>
