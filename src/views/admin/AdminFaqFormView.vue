@@ -1,7 +1,7 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from "vue";
-import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
-import { Search, X } from "lucide-vue-next";
+import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
+import { onBeforeRouteLeave, RouterLink, useRoute, useRouter } from "vue-router";
+import { Plus, Search, X } from "lucide-vue-next";
 import AdminPageHeader from "../../components/admin/AdminPageHeader.vue";
 import AdminState from "../../components/admin/AdminState.vue";
 import { createAdminFaq, getAdminCourses, getAdminFaq, getAdminFaqs, updateAdminFaq } from "../../services/adminApi";
@@ -17,6 +17,9 @@ const isDirty = ref(false);
 const allCourses = ref([]);
 const courseSearch = ref("");
 const duplicateWarning = ref("");
+const savedFaqs = ref([]);
+const draftOpen = ref(true);
+const questionInput = ref(null);
 let duplicateCheckTimer;
 
 const form = reactive({
@@ -78,6 +81,27 @@ function loadFaq(faq) {
   });
   isDirty.value = false;
 }
+function resetDraft() {
+  clearTimeout(duplicateCheckTimer);
+  Object.assign(form, {
+    question: "",
+    answer: "",
+    application_mode: "all_courses",
+    course_ids: [],
+    is_published: false,
+    sort_order: 0,
+  });
+  courseSearch.value = "";
+  duplicateWarning.value = "";
+  isDirty.value = false;
+}
+async function addAnotherFaq() {
+  resetDraft();
+  error.value = "";
+  draftOpen.value = true;
+  await nextTick();
+  questionInput.value?.focus();
+}
 function payload(isPublished) {
   return {
     question: form.question,
@@ -90,14 +114,22 @@ function payload(isPublished) {
 }
 async function save(isPublished) {
   error.value = "";
+  if (form.application_mode === "selected_courses" && form.course_ids.length === 0) {
+    error.value = "Selecione pelo menos um curso para esta FAQ.";
+    return;
+  }
   saving.value = true;
   try {
     const response = isEdit.value
       ? await updateAdminFaq(route.params.id, payload(isPublished))
       : await createAdminFaq(payload(isPublished));
-    loadFaq(response.data);
-    isDirty.value = false;
-    await router.replace({ name: "admin-faq-edit", params: { id: response.data.id } });
+    if (isEdit.value) {
+      loadFaq(response.data);
+    } else {
+      savedFaqs.value.push(response.data);
+      resetDraft();
+      draftOpen.value = false;
+    }
   } catch (requestError) {
     error.value =
       requestError.errors?.question?.[0] ||
@@ -111,8 +143,10 @@ async function save(isPublished) {
   }
 }
 function cancel() {
-  if (!isDirty.value || window.confirm("Existem alterações não salvas. Deseja sair mesmo assim?"))
+  if (!isDirty.value || window.confirm("Existem alterações não salvas. Deseja sair mesmo assim?")) {
+    isDirty.value = false;
     router.push({ name: "admin-faqs" });
+  }
 }
 onBeforeRouteLeave(() => {
   if (isDirty.value && !saving.value)
@@ -132,6 +166,25 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+watch(() => route.params.id, async (id) => {
+  clearTimeout(duplicateCheckTimer);
+  savedFaqs.value = [];
+  draftOpen.value = true;
+  error.value = "";
+  if (!id) {
+    resetDraft();
+    return;
+  }
+  loading.value = true;
+  try {
+    const faqPayload = await getAdminFaq(id);
+    loadFaq(faqPayload.data);
+  } catch (requestError) {
+    error.value = requestError.message;
+  } finally {
+    loading.value = false;
+  }
+});
 </script>
 
 <template>
@@ -139,14 +192,28 @@ onMounted(async () => {
     :title="isEdit ? 'Editar FAQ' : 'Nova FAQ'"
     :description="isEdit ? 'Altere a pergunta e os cursos onde ela aparece.' : 'Cadastre uma pergunta reutilizável entre um ou mais cursos.'"
     ><template #actions
-      ><button class="admin-button ghost" type="button" @click="cancel">Cancelar</button
-      ><button class="admin-button secondary" type="button" :disabled="saving" @click="save(false)">Salvar rascunho</button
-      ><button class="admin-button primary" type="button" :disabled="saving" @click="save(true)">
+      ><button class="admin-button ghost" type="button" @click="cancel">{{ savedFaqs.length && !draftOpen ? "Concluir" : "Cancelar" }}</button
+      ><button v-if="isEdit || draftOpen" class="admin-button secondary" type="button" :disabled="saving" @click="save(false)">Salvar rascunho</button
+      ><button v-if="isEdit || draftOpen" class="admin-button primary" type="button" :disabled="saving" @click="save(true)">
         {{ saving ? "Salvando…" : "Publicar" }}
       </button></template
     ></AdminPageHeader
   ><AdminState v-if="loading" message="Carregando FAQ…" />
-  <form v-else class="course-form" @submit.prevent="save(form.is_published)">
+  <template v-else>
+    <div v-if="savedFaqs.length" class="faq-saved-list" role="status" aria-live="polite">
+      <section v-for="(faq, index) in savedFaqs" :key="faq.id" class="form-card faq-saved-card">
+        <div>
+          <span class="faq-saved-number">FAQ {{ index + 1 }} salva</span>
+          <h2>{{ faq.question }}</h2>
+          <p>{{ faq.is_published ? "Publicada" : "Rascunho salvo" }} · {{ faq.application_mode === "all_courses" ? "Todos os cursos" : `${faq.course_ids.length} curso(s) selecionado(s)` }}</p>
+        </div>
+        <RouterLink class="admin-button ghost" :to="{ name: 'admin-faq-edit', params: { id: faq.id } }">Editar</RouterLink>
+      </section>
+    </div>
+    <button v-if="!isEdit && !draftOpen" class="admin-button secondary faq-add-button" type="button" @click="addAnotherFaq">
+      <Plus :size="18" /> Adicionar outra FAQ
+    </button>
+  <form v-if="isEdit || draftOpen" class="course-form" @submit.prevent="save(form.is_published)">
     <p v-if="error" class="form-alert error" role="alert">{{ error }}</p>
     <section class="form-card">
       <div class="form-card-heading">
@@ -157,6 +224,7 @@ onMounted(async () => {
       </div>
       <label
         >Pergunta<input
+          ref="questionInput"
           v-model="form.question"
           required
           maxlength="255"
@@ -218,4 +286,5 @@ onMounted(async () => {
       </div>
     </section>
   </form>
+  </template>
 </template>

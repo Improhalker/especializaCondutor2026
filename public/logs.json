@@ -118,5 +118,10 @@
     "id": 24,
     "date": "2026-09-29",
     "content": "Criado sitemap XML dinâmico na Vercel com páginas públicas e cursos publicados, robots.txt e domínio canônico sem www."
+  },
+  {
+    "id": 25,
+    "date": "2026-10-01",
+    "content": "Corrigido o cadastro de FAQs para aceitar a lista vazia de cursos quando a pergunta vale para todos, mantendo a exigência de seleção no modo específico. O painel agora permite salvar uma FAQ e abrir outra logo abaixo, sem voltar à listagem."
   }
 ]
