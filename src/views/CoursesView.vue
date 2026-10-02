@@ -6,6 +6,7 @@ import CourseSupportSections from "../components/CourseSupportSections.vue";
 import HeroSection from "../components/HeroSection.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
 import SkeletonCourseGrid from "../components/loading/SkeletonCourseGrid.vue";
+import { waitForSkeleton } from "../components/loading/waitForSkeleton";
 import { setPageSeo } from "../services/seo";
 const courses = ref([]);
 const categories = ref([]);
@@ -21,6 +22,7 @@ onBeforeUnmount(() => {
   active = false;
 });
 async function load() {
+  const startedAt = performance.now();
   loading.value = true;
   error.value = "";
   try {
@@ -35,10 +37,14 @@ async function load() {
     error.value = e.message;
     setPageSeo("error");
   } finally {
-    loading.value = false;
+    if (active) {
+      if (!error.value) await waitForSkeleton(startedAt);
+      if (active) loading.value = false;
+    }
   }
 }
 async function loadSupportContent() {
+  const startedAt = performance.now();
   supportLoading.value = true;
   supportError.value = "";
   try {
@@ -49,7 +55,10 @@ async function loadSupportContent() {
     if (!active) return;
     supportError.value = e.message;
   } finally {
-    if (active) supportLoading.value = false;
+    if (active) {
+      if (!supportError.value) await waitForSkeleton(startedAt);
+      if (active) supportLoading.value = false;
+    }
   }
 }
 onMounted(() => {

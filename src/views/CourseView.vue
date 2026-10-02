@@ -10,6 +10,7 @@ import NotFoundView from "./NotFoundView.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
 import SkeletonHero from "../components/loading/SkeletonHero.vue";
 import SkeletonCourseDetails from "../components/loading/SkeletonCourseDetails.vue";
+import { waitForSkeleton } from "../components/loading/waitForSkeleton";
 const props = defineProps({ slug: { type: String, required: true } });
 const course = ref(null);
 const loading = ref(true);
@@ -27,6 +28,7 @@ function sortModalities(modalities = []) {
   });
 }
 async function load() {
+  const startedAt = performance.now();
   const current = ++generation;
   course.value = null;
   error.value = false;
@@ -45,7 +47,10 @@ async function load() {
     error.value = !notFound.value;
     setPageSeo(notFound.value ? "not-found" : "error");
   } finally {
-    if (current === generation) loading.value = false;
+    if (current === generation) {
+      if (course.value) await waitForSkeleton(startedAt);
+      if (current === generation) loading.value = false;
+    }
   }
 }
 watch(() => props.slug, load, { immediate: true });
