@@ -145,6 +145,11 @@
     "content": "Ampliado Atendimentos com análise própria de visitas, páginas e ações mais usadas, rolagem, tempo ativo, origens, campanhas, dispositivos e desempenho, com gráficos e filtros no servidor. O IP interno informado e acessos administrativos são ignorados, o histórico de WhatsApp foi preservado e a política de privacidade foi atualizada."
   },
   {
+    "id": 30,
+    "date": "2026-10-02",
+    "content": "Revisados individualmente os cinco cursos e suas dez modalidades. O bloco de características agora destaca carga horária confirmada, formato, materiais, avaliação, certificado, suporte e acesso; o admin permite editar esses dados por modalidade e cadastrar quantidade e duração de videoaulas. Temas da Formação foram organizados a partir das FAQs do próprio curso, sem inventar PDFs, cargas de Atualização ou informações de vídeo não cadastradas."
+  },
+  {
     "id": 31,
     "date": "2026-10-01",
     "content": "Restaurado o skeleton animado na listagem e no detalhe dos cursos, com tempo mínimo de exibição quando a API responde rapidamente."

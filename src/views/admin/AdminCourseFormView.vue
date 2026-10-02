@@ -6,6 +6,8 @@ import WhatsAppIcon from "../../components/WhatsAppIcon.vue";
 import AdminPageHeader from "../../components/admin/AdminPageHeader.vue";
 import MediaPicker from "../../components/admin/media/MediaPicker.vue";
 import HeroEditor from "../../components/admin/HeroEditor.vue";
+import CourseCharacteristicsEditor from "../../components/admin/CourseCharacteristicsEditor.vue";
+import { editableCharacteristics, serializeCharacteristics } from "../../services/courseCharacteristics";
 import AdminState from "../../components/admin/AdminState.vue";
 import {
   createAdminCourse,
@@ -30,6 +32,7 @@ const blankModality = (name, sortOrder) => ({
   name,
   workload: "",
   description: "",
+  characteristics: editableCharacteristics(),
   featuresText: "",
   bonusesText: "",
   price_mode: "consult",
@@ -64,7 +67,7 @@ const form = reactive({
   sort_order: 0,
   meta_title: "",
   meta_description: "",
-  modalities: [blankModality("Atualização", 1), blankModality("Formação", 2)],
+  modalities: [blankModality("Formação", 1), blankModality("Atualização", 2)],
   faqs: [],
 });
 
@@ -106,6 +109,7 @@ function loadCourse(course) {
     requirements: course.requirements?.length ? course.requirements : [""],
     modalities: course.modalities.map((modality) => ({
       ...modality,
+      characteristics: editableCharacteristics(modality.characteristics),
       featuresText: (modality.features || []).join("\n"),
       bonusesText: (modality.bonuses || []).join("\n"),
       price: modality.price || "",
@@ -124,6 +128,7 @@ function payload(isPublished) {
     modalities: form.modalities.map(
       ({ featuresText, bonusesText, ...modality }) => ({
         ...modality,
+        characteristics: serializeCharacteristics(modality.characteristics),
         features: lineArray(featuresText),
         bonuses: lineArray(bonusesText),
         price: modality.price === "" ? null : modality.price,
@@ -177,6 +182,7 @@ async function save(isPublished) {
       requestError.errors?.cover_alt_text?.[0] ||
       requestError.errors?.name?.[0] ||
       requestError.errors?.slug?.[0] ||
+      Object.values(requestError.errors || {}).flat()[0] ||
       requestError.message;
   } finally {
     saving.value = false;
@@ -421,7 +427,7 @@ onMounted(async () => {
               >Carga horária<input
                 v-model="modality.workload"
                 maxlength="80"
-                placeholder="Ex.: 16 horas-aula"
+                placeholder="Informe a carga horária confirmada"
                 @input="markDirty" /></label
             ><label
               >Ordem<input
@@ -438,10 +444,16 @@ onMounted(async () => {
               placeholder="Explique para quem esta modalidade é indicada."
               @input="markDirty"
             ></textarea></label
-          ><label
-            >Informações e recursos<small
-              >Uma linha por item: formato, avaliação, certificação, observações
-              etc.</small
+          >
+          <CourseCharacteristicsEditor
+            :model-value="modality.characteristics"
+            :modality-name="modality.name"
+            :workload="modality.workload || ''"
+            @update:model-value="modality.characteristics = $event; markDirty()"
+          />
+          <label
+            >Conteúdo e informações adicionais<small
+              >Uma linha por item. Cadastre somente temas e informações confirmados para esta modalidade.</small
             ><textarea
               v-model="modality.featuresText"
               rows="5"

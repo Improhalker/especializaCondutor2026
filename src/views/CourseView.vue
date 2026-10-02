@@ -11,6 +11,7 @@ import PublicErrorState from "../components/PublicErrorState.vue";
 import SkeletonHero from "../components/loading/SkeletonHero.vue";
 import SkeletonCourseDetails from "../components/loading/SkeletonCourseDetails.vue";
 import { waitForSkeleton } from "../components/loading/waitForSkeleton";
+import CourseCharacteristics from "../components/CourseCharacteristics.vue";
 const props = defineProps({ slug: { type: String, required: true } });
 const course = ref(null);
 const loading = ref(true);
@@ -146,7 +147,9 @@ function talk() {
               </div>
             </div>
             <p>{{ modality.description }}</p>
-            <ul class="check-list">
+            <CourseCharacteristics :modality="modality" />
+            <h3 v-if="modality.features?.length" class="course-content-subtitle">Conteúdo e informações da modalidade</h3>
+            <ul v-if="modality.features?.length" class="check-list">
               <li v-for="item in modality.features" :key="item">{{ item }}</li>
             </ul>
             <div v-if="modality.bonuses?.length" class="bonus-box">
@@ -202,3 +205,7 @@ function talk() {
     </section>
   </div>
 </template>
+
+<style scoped>
+.course-content-subtitle { font-size: 1rem; color: #0e3459; margin: 24px 0 14px; }
+</style>
