@@ -41,6 +41,8 @@ defineEmits(["retry"]);
       </div>
       <a
         class="button button-white"
+        data-analytics-kind="whatsapp"
+        data-analytics-label="WhatsApp · Faixa de atendimento"
         :href="whatsappUrl('Olá! Gostaria de saber mais sobre os cursos da Especializa Condutor.')"
       >
         <WhatsAppIcon /> Falar no WhatsApp

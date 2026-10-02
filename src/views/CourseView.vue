@@ -159,7 +159,7 @@ function talk() {
                   modality.price
                 }}</strong>
               </div>
-              <button class="button" type="button" @click="talk">
+              <button class="button" type="button" @click="talk" data-analytics-kind="whatsapp" :data-analytics-label="`WhatsApp · ${modality.name} · Conteúdo do curso`">
                 <WhatsAppIcon /> Falar no WhatsApp
               </button>
             </div>
@@ -189,7 +189,7 @@ function talk() {
           Estamos prontos para orientar você sobre modalidade, requisitos,
           matrícula e etapas de registro.
         </p>
-        <button class="button button-full" type="button" @click="talk">
+        <button class="button button-full" type="button" @click="talk" data-analytics-kind="whatsapp" :data-analytics-label="`WhatsApp · ${modality?.name || 'Curso'} · Barra de ajuda`">
           <WhatsAppIcon /> Chamar no WhatsApp
         </button>
       </aside>

@@ -1,3 +1,6 @@
+import { adminSession } from "./adminSession";
+import { campaignValue } from "./analyticsPayload";
+
 const API_URL = import.meta.env.VITE_API_URL || "/api";
 const WHATSAPP_NUMBER = "5519999065094";
 const apiOrigin = new URL(API_URL, window.location.href).origin;
@@ -39,16 +42,15 @@ export async function getCourse(slug) {
 export const whatsappUrl = (message) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 export async function trackWhatsAppClick(payload) {
+  if (adminSession.token || navigator.doNotTrack === "1" || navigator.globalPrivacyControl) return;
   try {
     await fetch(`${API_URL}/whatsapp-clicks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...payload,
-        source_url: window.location.href,
-        utm_source: new URLSearchParams(window.location.search).get(
-          "utm_source",
-        ),
+        source_url: window.location.origin + window.location.pathname,
+        ...Object.fromEntries(["utm_source", "utm_medium", "utm_campaign"].map(key => [key, campaignValue(new URLSearchParams(window.location.search).get(key))])),
       }),
       keepalive: true,
     });

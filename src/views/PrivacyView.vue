@@ -5,7 +5,7 @@
         <p class="eyebrow">TRANSPARÊNCIA</p>
         <h1>Política de Privacidade</h1>
         <p>O essencial sobre os dados usados na navegação e no atendimento.</p>
-        <small>Atualizada em 26 de setembro de 2026</small>
+        <small>Atualizada em 1º de outubro de 2026</small>
       </div>
     </header>
 
@@ -19,11 +19,21 @@
       <section aria-labelledby="privacy-data">
         <h2 id="privacy-data">Quais dados usamos</h2>
         <p>
-          Quando alguém clica para falar conosco, registramos o curso e a
-          modalidade de interesse, a página de origem, eventuais parâmetros de
-          campanha e a data do clique. Não pedimos dados pessoais para navegar
-          pelos cursos. A hospedagem também pode manter registros técnicos de
-          acesso, como IP, navegador e horário, para funcionamento e segurança.
+          Para melhorar o site, registramos as páginas acessadas, os botões e
+          perguntas frequentes acionados, a maior rolagem alcançada, o tempo
+          ativo na página, o tipo de dispositivo, a origem da visita e eventuais
+          identificadores de campanha. Também medimos carregamento, resposta às
+          interações e estabilidade visual. Nos cliques de WhatsApp, registramos
+          o curso e a modalidade quando disponíveis.
+        </p>
+        <p>
+          A análise própria usa um identificador aleatório temporário na aba do
+          navegador, sem cookies de rastreamento. Não captura conteúdo digitado,
+          nome, e-mail ou IP nos registros analíticos. O IP pode ser consultado
+          pelo servidor para ignorar acessos internos e não é salvo nessas
+          métricas. A hospedagem pode manter logs técnicos separados para
+          funcionamento e segurança. Não é necessário informar dados pessoais
+          para navegar pelos cursos.
         </p>
         <p>
           Se você informar nome, e-mail ou outros dados durante o atendimento,
@@ -36,7 +46,7 @@
       <section aria-labelledby="privacy-purpose">
         <h2 id="privacy-purpose">Por que usamos esses dados</h2>
         <p>
-          Os registros de clique ajudam a entender quais cursos despertam
+          As estatísticas de navegação e de clique ajudam a entender quais cursos despertam
           interesse e a melhorar o site. As informações enviadas no atendimento
           servem para conversar com você e, se decidir se matricular, encaminhar
           o necessário à instituição parceira. Não vendemos seus dados.
@@ -64,8 +74,10 @@
           <a href="https://wa.me/5519999065094" rel="noopener noreferrer">WhatsApp (19) 99906-5094</a>.
           Você também pode escrever para
           <a href="mailto:especializacondutor@gmail.com">especializacondutor@gmail.com</a>.
-          Se passarmos a usar novos formulários ou ferramentas de análise, este
-          texto será atualizado para explicar a mudança.
+          Nossa análise própria respeita os sinais “Não rastrear” (DNT) e
+          Global Privacy Control quando ativados no navegador. Estes controles
+          não impedem o uso do site. Se passarmos a usar novos formulários ou
+          ferramentas de análise, este texto será atualizado.
         </p>
       </section>
 

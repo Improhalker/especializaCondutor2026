@@ -86,6 +86,8 @@ watch(
               class="button button-small"
               type="button"
               @click="openWhatsApp"
+              data-analytics-kind="whatsapp"
+              data-analytics-label="WhatsApp · Cabeçalho"
             >
               <WhatsAppIcon /> Falar no WhatsApp
             </button>
@@ -118,7 +120,7 @@ watch(
           </div>
           <div>
             <p class="footer-title">Atendimento</p>
-            <button class="footer-link" type="button" @click="openWhatsApp">
+            <button class="footer-link" type="button" @click="openWhatsApp" data-analytics-kind="whatsapp" data-analytics-label="WhatsApp · Rodapé">
               <WhatsAppIcon /> WhatsApp: (19) 99906-5094
             </button>
             <a class="footer-link" href="mailto:especializacondutor@gmail.com">
@@ -155,6 +157,8 @@ watch(
     </div>
     <button
       class="whatsapp-float"
+      data-analytics-kind="whatsapp"
+      data-analytics-label="WhatsApp · Botão flutuante"
       type="button"
       aria-label="Tire suas dúvidas pelo WhatsApp"
       @click="openWhatsApp"

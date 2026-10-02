@@ -66,6 +66,8 @@ function talkAbout(course = "") {
             class="button button-outline"
             type="button"
             @click="talkAbout()"
+            data-analytics-kind="whatsapp"
+            data-analytics-label="WhatsApp · Hero da Home"
           >
             <WhatsAppIcon /> Falar com um consultor
           </button>

@@ -1,11 +1,15 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+import { startSiteAnalytics } from "./services/siteAnalytics";
 import { reveal } from "./directives/reveal";
 import "./styles/main.css";
 import "./styles/admin.css";
+import "./styles/analytics.css";
 import "./styles/media.css";
 import "./styles/public.css";
 import "./styles/hero.css";
 import "./styles/motion.css";
 createApp(App).directive("reveal", reveal).use(router).mount("#app");
+const stopAnalytics = startSiteAnalytics(router);
+if (import.meta.hot) import.meta.hot.dispose(stopAnalytics);

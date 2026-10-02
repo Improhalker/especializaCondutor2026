@@ -133,5 +133,15 @@
     "id": 27,
     "date": "2026-10-01",
     "content": "Reutilizadas na listagem de cursos as seções da Home de depoimentos, Como funciona, atendimento pelo WhatsApp e FAQs gerais, com carregamento independente do catálogo e opção de tentar novamente."
+  },
+  {
+    "id": 28,
+    "date": "2026-10-01",
+    "content": "Corrigida a paginação de Atendimentos para aceitar os contratos antigo e novo do Laravel; sessões expiradas agora levam ao login sem quebrar a tela, e falhas de conexão permitem tentar novamente."
+  },
+  {
+    "id": 29,
+    "date": "2026-10-01",
+    "content": "Ampliado Atendimentos com análise própria de visitas, páginas e ações mais usadas, rolagem, tempo ativo, origens, campanhas, dispositivos e desempenho, com gráficos e filtros no servidor. O IP interno informado e acessos administrativos são ignorados, o histórico de WhatsApp foi preservado e a política de privacidade foi atualizada."
   }
 ]
