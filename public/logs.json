@@ -158,5 +158,10 @@
     "id": 32,
     "date": "2026-10-02",
     "content": "Revisado o layout público e administrativo em desktop, tablet e celular. Ampliado e alinhado o ícone do WhatsApp no cartão lateral dos cursos, padronizados os espaçamentos das seções e reduzidos os paddings acumulados no celular. O carrossel usa controles abaixo dos cards em telas pequenas e não reserva espaço sem navegação. Corrigidos filtros e transbordamento horizontal na listagem administrativa de cursos."
+  },
+  {
+    "id": 33,
+    "date": "2026-10-02",
+    "content": "Definida a carga horária de Atualização como 16 horas nos cinco cursos, conforme orientação do responsável, pela API administrativa Laravel. Mantidas as 50 horas de Formação e todas as demais características de cada modalidade."
   }
 ]
