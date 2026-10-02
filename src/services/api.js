@@ -23,6 +23,9 @@ async function request(path) {
   return response.json();
 }
 export const getHome = () => request("/home");
+export async function getTestimonials() {
+  return (await request("/testimonials")).data;
+}
 export async function getCourses() {
   const payload = await request("/courses");
   const courses = payload.data;

@@ -19,7 +19,7 @@ import SkeletonText from "./SkeletonText.vue";
               <div class="testimonial-card">
                 <SkeletonText :lines="3" height="13px" gap="8px" />
                 <footer class="testimonial-footer">
-                  <SkeletonBase circle width="44px" height="44px" />
+                  <SkeletonBase circle width="50px" height="50px" />
                   <SkeletonBase variant="text" width="120px" height="14px" />
                 </footer>
               </div>

@@ -59,6 +59,9 @@ const initials = computed(() =>
           v-if="avatarUrl && !avatarFailed"
           :src="avatarUrl"
           :alt="avatarAlt"
+          class="testimonial-avatar-image"
+          width="50"
+          height="50"
           loading="lazy"
           @error="avatarFailed = true"
         />
@@ -68,3 +71,12 @@ const initials = computed(() =>
     </footer>
   </article>
 </template>
+
+<style scoped>
+.testimonial-avatar-image {
+  display: block;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+</style>

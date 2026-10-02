@@ -163,5 +163,10 @@
     "id": 33,
     "date": "2026-10-02",
     "content": "Definida a carga horária de Atualização como 16 horas nos cinco cursos, conforme orientação do responsável, pela API administrativa Laravel. Mantidas as 50 horas de Formação e todas as demais características de cada modalidade."
+  },
+  {
+    "id": 34,
+    "date": "2026-10-02",
+    "content": "Adicionado o carrossel de depoimentos publicados às páginas individuais de todos os cursos, com carregamento independente pela API Laravel, estado de erro e nova tentativa. Padronizados avatares e skeletons em 50 × 50 px, preservando o recorte circular e o fallback institucional."
   }
 ]

@@ -12,6 +12,7 @@ import SkeletonHero from "../components/loading/SkeletonHero.vue";
 import SkeletonCourseDetails from "../components/loading/SkeletonCourseDetails.vue";
 import { waitForSkeleton } from "../components/loading/waitForSkeleton";
 import CourseCharacteristics from "../components/CourseCharacteristics.vue";
+import CourseTestimonials from "../components/testimonials/CourseTestimonials.vue";
 const props = defineProps({ slug: { type: String, required: true } });
 const course = ref(null);
 const loading = ref(true);
@@ -203,6 +204,7 @@ function talk() {
       </aside>
       </div>
     </section>
+    <CourseTestimonials />
   </div>
 </template>
 
