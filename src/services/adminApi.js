@@ -6,6 +6,7 @@ import {
 } from "./adminSession";
 
 const API_URL = import.meta.env.VITE_API_URL || "/api";
+export const getSiteAnalytics = (params = {}) => request(`/admin/analytics?${new URLSearchParams(Object.entries(params).filter(([, value]) => value !== '' && value != null))}`);
 
 async function request(path, options = {}) {
   const headers = {
@@ -26,7 +27,7 @@ async function request(path, options = {}) {
   if (!response.ok) {
     if (response.status === 401) clearAdminSession();
     const error = new Error(
-      payload.message || "Não foi possível concluir esta ação.",
+      response.status === 401 ? "Sua sessão expirou. Entre novamente para continuar." : payload.message || "Não foi possível concluir esta ação.",
     );
     error.status = response.status;
     error.errors = payload.errors || {};

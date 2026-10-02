@@ -158,7 +158,7 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   if (to.meta.requiresAdmin && !adminSession.token)
-    return { name: "admin-login" };
+    return { name: "admin-login", query: { redirect: to.fullPath } };
   if (to.name === "admin-login" && adminSession.token)
     return {
       name: adminSession.user?.must_change_password

@@ -54,6 +54,8 @@ const links = [
         v-for="link in links"
         :key="link.name"
         :to="{ name: link.name }"
+        :active-class="link.name === 'admin-dashboard' ? 'dashboard-parent' : 'router-link-active'"
+        exact-active-class="router-link-active"
         :title="collapsed ? link.label : undefined"
         ><component :is="link.icon" :size="20" /><span>{{
           link.label
