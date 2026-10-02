@@ -172,7 +172,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="testimonial-carousel" @mouseenter="pause" @mouseleave="resume">
-    <div class="testimonial-carousel-viewport">
+    <div class="testimonial-carousel-viewport" :class="{ 'has-navigation': positions.length > 1 }">
       <button
         v-if="positions.length > 1"
         class="testimonial-nav prev"

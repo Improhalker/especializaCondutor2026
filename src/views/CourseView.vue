@@ -198,7 +198,7 @@ function talk() {
           matrícula e etapas de registro.
         </p>
         <button class="button button-full" type="button" @click="talk" data-analytics-kind="whatsapp" :data-analytics-label="`WhatsApp · ${modality?.name || 'Curso'} · Barra de ajuda`">
-          <WhatsAppIcon /> Chamar no WhatsApp
+          <WhatsAppIcon :size="28" /><span>Chamar no WhatsApp</span>
         </button>
       </aside>
       </div>

@@ -1,6 +1,13 @@
 /* Acabamento público: escopo preserva os componentes administrativos. */
 .public-site {
+  --section-space: clamp(56px, 7vw, 88px);
   overflow-wrap: anywhere;
+}
+.public-site :is(.section, .benefits, .testimonials, .about-impact, .about-values, .about-story) {
+  padding-block: var(--section-space);
+}
+.public-site .section-heading {
+  margin-bottom: clamp(24px, 3.2vw, 38px);
 }
 .public-site :is(button, a, summary):focus-visible {
   outline: 3px solid #136ab7;
@@ -22,6 +29,7 @@
   gap: 8px;
   text-align: center;
   white-space: normal;
+  line-height: 1.4;
 }
 .public-site
   :is(
@@ -73,8 +81,35 @@
 .public-site .course-card-body .text-link {
   margin-top: auto;
 }
+.public-site .testimonial-carousel-viewport:not(.has-navigation) {
+  padding: 0;
+}
 .public-site .course-aside .eyebrow {
   color: #8fc4f2;
+}
+.public-site .course-layout {
+  gap: 32px;
+}
+.public-site .course-aside {
+  padding: 24px;
+}
+.public-site .course-aside p:not(.eyebrow) {
+  margin-bottom: 20px;
+}
+.public-site .course-aside .button {
+  min-height: 52px;
+  padding: 12px;
+  gap: 10px;
+  margin-top: 0;
+  text-align: left;
+}
+.public-site .course-aside .button span {
+  min-width: 0;
+}
+@media (min-width: 851px) {
+  .public-site .course-layout {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
 }
 .public-site .modality-selector button {
   flex-wrap: wrap;
@@ -99,6 +134,7 @@
 }
 .public-site .footer-grid {
   grid-template-columns: 2fr 1fr 1.25fr 1.2fr;
+  gap: clamp(24px, 3.2vw, 40px);
 }
 .public-site .site-footer {
   padding: 0;
@@ -154,6 +190,8 @@
   animation: whatsapp-pulse 2.8s ease-out infinite;
 }
 .public-site .whatsapp-float .whatsapp-icon {
+  width: 100%;
+  height: 100%;
   animation: whatsapp-breathe 2.8s ease-in-out infinite;
 }
 .public-site .whatsapp-float:hover .whatsapp-icon {
@@ -228,6 +266,9 @@
   color: #607285;
 }
 @media (max-width: 560px) {
+  .public-site .container {
+    width: min(var(--container), calc(100% - 32px));
+  }
   .public-site .hero h1 {
     font-size: clamp(2rem, 8.5vw, 2.55rem);
   }
@@ -257,8 +298,51 @@
   .public-site .modality-footer .button {
     width: 100%;
   }
+  .public-site .cta-inner .button {
+    width: 100%;
+  }
+  .public-site .course-aside {
+    padding: 22px;
+  }
+  .public-site .info-panel {
+    padding: 20px;
+    margin-bottom: 28px;
+  }
+  .public-site .modality-detail {
+    padding: 18px;
+  }
+  .public-site .modality-selector button {
+    padding: 14px;
+    min-height: 60px;
+  }
+  .public-site .faq summary {
+    gap: 14px;
+  }
   .public-site .course-layout {
     padding-bottom: 48px;
+  }
+}
+@media (max-width: 850px) {
+  .public-site .hero-copy {
+    padding-block: 56px;
+  }
+}
+@media (max-width: 640px) {
+  .public-site .testimonial-carousel-viewport.has-navigation {
+    padding: 0 0 56px;
+  }
+  .public-site .testimonial-nav {
+    top: auto;
+    bottom: 0;
+    transform: none;
+    width: 44px;
+    height: 44px;
+  }
+  .public-site .testimonial-nav.prev {
+    left: calc(50% - 52px);
+  }
+  .public-site .testimonial-nav.next {
+    right: calc(50% - 52px);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -407,7 +491,7 @@
   box-shadow: 0 0 0 7px rgb(143 196 242 / 0.16);
 }
 .public-site .about-impact {
-  padding: 100px 0;
+  padding: var(--section-space) 0;
   background: #f3f8fc;
 }
 .public-site .about-impact-heading {
@@ -469,8 +553,8 @@
   color: #607285;
 }
 .public-site .about-story {
-  padding-top: 110px;
-  padding-bottom: 110px;
+  padding-top: var(--section-space);
+  padding-bottom: var(--section-space);
 }
 .public-site .about-story-grid {
   display: grid;
@@ -523,7 +607,7 @@
   color: #8fc4f2;
 }
 .public-site .about-values {
-  padding: 100px 0;
+  padding: var(--section-space) 0;
   border-top: 1px solid #e4ebf1;
   background: #fbfcfd;
 }
@@ -624,7 +708,7 @@
   }
   .public-site .about-impact,
   .public-site .about-values {
-    padding: 72px 0;
+    padding: var(--section-space) 0;
   }
   .public-site .about-numbers,
   .public-site .about-values-grid {
@@ -643,8 +727,8 @@
     margin-bottom: 22px;
   }
   .public-site .about-story {
-    padding-top: 76px;
-    padding-bottom: 76px;
+    padding-top: var(--section-space);
+    padding-bottom: var(--section-space);
   }
   .public-site .about-principles {
     padding: 30px 25px;
@@ -703,7 +787,7 @@
   padding-bottom: 0;
 }
 .public-site .course-content {
-  padding: 34px;
+  padding: 28px;
   border: 1px solid #d9e6f0;
   border-radius: 16px;
   background: rgb(255 255 255 / 0.72);
@@ -764,7 +848,7 @@
   line-height: 1.45;
 }
 .public-site .course-faq {
-  padding: 42px 34px 0;
+  padding: 32px 28px 20px;
   margin-top: 28px;
   border: 1px solid #d9e6f0;
   border-radius: 16px;
@@ -772,11 +856,11 @@
 }
 @media (max-width: 560px) {
   .public-site .course-content {
-    padding: 24px;
+    padding: 16px;
     border-radius: 14px;
   }
   .public-site .course-faq {
-    padding: 30px 24px 0;
+    padding: 24px 20px 16px;
     border-radius: 14px;
   }
 }
@@ -951,6 +1035,9 @@
   }
   .public-site .regulatory-grid {
     grid-template-columns: 1fr;
+  }
+  .public-site .regulatory-grid article {
+    padding: 20px;
   }
   .public-site .regulatory-sources {
     align-items: flex-start;

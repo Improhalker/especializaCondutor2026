@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  size: { type: Number, default: 20 },
+  size: { type: Number, default: 24 },
 });
 </script>
 
@@ -12,13 +12,16 @@ defineProps({
     aria-hidden="true"
     :width="size"
     :height="size"
+    :style="{ '--whatsapp-icon-size': `${size}px` }"
   />
 </template>
 
 <style scoped>
 .whatsapp-icon {
-  display: inline-block;
+  display: block;
   flex: none;
+  width: var(--whatsapp-icon-size);
+  height: var(--whatsapp-icon-size);
   object-fit: contain;
 }
 </style>
