@@ -168,5 +168,10 @@
     "id": 34,
     "date": "2026-10-02",
     "content": "Adicionado o carrossel de depoimentos publicados às páginas individuais de todos os cursos, com carregamento independente pela API Laravel, estado de erro e nova tentativa. Padronizados avatares e skeletons em 50 × 50 px, preservando o recorte circular e o fallback institucional."
+  },
+  {
+    "id": 35,
+    "date": "2026-10-28",
+    "content": "Atualizadas seletivamente as dependências de segurança do backend: CommonMark 2.10.4 e Symfony HttpFoundation 8.1.9, eliminando os três alertas conhecidos da auditoria Composer. Adicionada auditoria do lock no GitHub Actions antes da instalação e dos testes, sem alterar a versão principal do PHP ou do Laravel."
   }
 ]
