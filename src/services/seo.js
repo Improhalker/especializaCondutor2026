@@ -1,4 +1,4 @@
-import { INDEXABLE_PAGES, SITE_ORIGIN } from "./publicPages";
+import { INDEXABLE_PAGES, SITE_ORIGIN } from "./publicPages.js";
 
 const brand = "Especializa Condutor";
 const descriptions = {
@@ -104,6 +104,13 @@ function meta(attribute, key, content) {
   node.content = content;
   if (!node.isConnected) document.head.append(node);
 }
+export function robotsDirective(page, indexable) {
+  // Loading is temporary, not evidence that a public course must be excluded.
+  if (page === "loading" && indexable) return null;
+  return indexable && (Object.hasOwn(INDEXABLE_PAGES, page) || page === "course")
+    ? "index, follow"
+    : "noindex, nofollow";
+}
 export function setPageSeo(page, course = null) {
   const serverOrigin = document.head.querySelector(
     'meta[name="site-origin"]',
@@ -123,7 +130,7 @@ export function setPageSeo(page, course = null) {
   meta(
     "name",
     "robots",
-    data.public && indexable ? "index, follow" : "noindex, nofollow",
+    robotsDirective(page, indexable),
   );
   for (const [key, value] of Object.entries({
     title: data.title,

@@ -18,9 +18,9 @@ test("lists public pages and catalog URLs with the canonical origin", () => {
     "/cursos/mopp",
     "/cursos/transporte-escolar",
   ]) {
-    assert.ok(xml.includes(`<loc>https://especializacondutor.com.br${path}</loc>`));
+    assert.ok(xml.includes(`<loc>https://www.especializacondutor.com.br${path}</loc>`));
   }
-  assert.equal(xml.match(/<loc>https:\/\/especializacondutor.com.br\/cursos\/mopp<\/loc>/g)?.length, 1);
+  assert.equal(xml.match(/<loc>https:\/\/www.especializacondutor.com.br\/cursos\/mopp<\/loc>/g)?.length, 1);
   assert.ok(!xml.includes("/admin"));
   assert.ok(!xml.includes("/api"));
 });
@@ -33,7 +33,7 @@ test("uses the public course API and returns XML", async () => {
     const response = await GET();
     assert.equal(response.status, 200);
     assert.match(response.headers.get("Content-Type"), /^application\/xml/);
-    assert.match(await response.text(), /<loc>https:\/\/especializacondutor.com.br\/cursos\/mopp<\/loc>/);
+    assert.match(await response.text(), /<loc>https:\/\/www.especializacondutor.com.br\/cursos\/mopp<\/loc>/);
   } finally {
     globalThis.fetch = originalFetch;
   }
