@@ -12,6 +12,7 @@ test("lists public pages and catalog URLs with the canonical origin", () => {
   for (const path of [
     "/",
     "/cursos",
+    "/blog",
     "/quem-somos",
     "/politica-de-privacidade",
     "/termos-de-uso",
@@ -23,6 +24,30 @@ test("lists public pages and catalog URLs with the canonical origin", () => {
   assert.equal(xml.match(/<loc>https:\/\/www.especializacondutor.com.br\/cursos\/mopp<\/loc>/g)?.length, 1);
   assert.ok(!xml.includes("/admin"));
   assert.ok(!xml.includes("/api"));
+});
+
+test("lists published blog articles once", () => {
+  const xml = buildSitemap([], [{ slug: "renovar-mopp" }, { slug: "renovar-mopp" }, { slug: "" }]);
+  assert.equal(xml.match(/<loc>https:\/\/www.especializacondutor.com.br\/blog\/renovar-mopp<\/loc>/g)?.length, 1);
+  assert.ok(xml.includes("<loc>https://www.especializacondutor.com.br/blog</loc>"));
+});
+
+test("reads every page of the public blog API", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    if (String(url).includes("/blog/posts")) {
+      const page = Number(new URL(url).searchParams.get("page"));
+      return new Response(JSON.stringify({ data: [{ slug: `artigo-${page}` }], meta: { last_page: 2 } }));
+    }
+    return new Response(JSON.stringify({ data: [{ slug: "mopp" }] }));
+  };
+  try {
+    const xml = await (await GET()).text();
+    assert.match(xml, /\/blog\/artigo-1</);
+    assert.match(xml, /\/blog\/artigo-2</);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test("uses the public course API and returns XML", async () => {

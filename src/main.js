@@ -10,6 +10,7 @@ import "./styles/media.css";
 import "./styles/public.css";
 import "./styles/hero.css";
 import "./styles/motion.css";
+import "./styles/blog.css";
 createApp(App).directive("reveal", reveal).use(router).mount("#app");
 const stopAnalytics = startSiteAnalytics(router);
 if (import.meta.hot) import.meta.hot.dispose(stopAnalytics);

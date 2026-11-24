@@ -8,6 +8,8 @@ import {
   HelpCircle,
   History,
   LayoutDashboard,
+  MessagesSquare,
+  Newspaper,
   MessageSquareQuote,
   PanelsTopLeft,
   Settings,
@@ -19,6 +21,8 @@ defineEmits(["toggle", "close"]);
 const links = [
   { name: "admin-dashboard", label: "Visão geral", icon: LayoutDashboard },
   { name: "admin-courses", label: "Cursos", icon: GraduationCap },
+  { name: "admin-blog", label: "Blog", icon: Newspaper },
+  { name: "admin-blog-comments", label: "Comentários", icon: MessagesSquare },
   { name: "admin-testimonials", label: "Depoimentos", icon: MessageSquareQuote },
   { name: "admin-faqs", label: "FAQs", icon: HelpCircle },
   { name: "admin-media", label: "Mídia", icon: Images },

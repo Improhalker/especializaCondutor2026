@@ -326,6 +326,8 @@ onBeforeUnmount(() => {
             <RouterLink
               :to="usage.type === 'page'
                 ? { name: 'admin-appearance', query: { page: usage.page_key } }
+                : usage.type === 'blog_post'
+                ? { name: 'admin-blog-edit', params: { id: usage.id } }
                 : { name: 'admin-course-edit', params: { id: usage.id } }"
               @click="deleting = null"
               >{{ usage.name }} · {{ usage.role }}</RouterLink

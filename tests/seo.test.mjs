@@ -60,6 +60,57 @@ for (const [slug, name] of [
   });
 }
 
+test("artigo publicado entrega SEO de artigo, título e corpo no HTML inicial", async () => {
+  const calls = [];
+  const response = await pageResponse(requestFor("/api/page?page_path=/blog/renovar-mopp&utm_source=audit"), {
+    template, environment,
+    fetcher: async (url, options) => {
+      calls.push(url);
+      assert.equal(options.redirect, "error");
+      return Response.json({ data: {
+        slug: "renovar-mopp", title: "Como renovar o MOPP", excerpt: "Prazos <e> documentos.",
+        meta_title: "", meta_description: "", published_at: "2026-11-20T13:00:00.000Z",
+        body: "<h2>Prazos</h2><p>O curso vale por cinco anos.</p>",
+      } });
+    },
+  });
+  const html = await response.text();
+  assert.deepEqual(calls, ["https://api.especializacondutor.com.br/api/blog/posts/renovar-mopp"]);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("X-Robots-Tag"), "index, follow");
+  assert.ok(html.includes("<title>Como renovar o MOPP | Especializa Condutor</title>"));
+  assert.ok(html.includes(`<link rel="canonical" href="${SITE_ORIGIN}/blog/renovar-mopp">`));
+  assert.ok(html.includes('property="og:type" content="article"'));
+  assert.ok(html.includes('property="article:published_time" content="2026-11-20T13:00:00.000Z"'));
+  assert.ok(html.includes("<h1>Como renovar o MOPP</h1>"));
+  assert.ok(html.includes("Prazos &lt;e&gt; documentos."));
+  assert.ok(html.includes("<h2>Prazos</h2><p>O curso vale por cinco anos.</p>"));
+  assert.ok(!html.includes("utm_source"));
+});
+
+test("listagem do blog inclui artigos publicados e tolera API indisponível", async () => {
+  const listed = await pageResponse(requestFor("/blog"), {
+    template, environment,
+    fetcher: async () => Response.json({ data: [{ slug: "renovar-mopp", title: "Como renovar o MOPP", excerpt: "Resumo" }] }),
+  });
+  const html = await listed.text();
+  assert.equal(listed.status, 200);
+  assert.ok(html.includes('href="/blog/renovar-mopp"'));
+  const offline = await pageResponse(requestFor("/blog"), { template, environment, fetcher: async () => new Response(null, { status: 503 }) });
+  assert.equal(offline.status, 200);
+  assert.equal(offline.headers.get("X-Robots-Tag"), "index, follow");
+});
+
+test("artigo inexistente ou fora do ar retorna 404 real; API indisponível retorna 503", async () => {
+  const missing = await pageResponse(requestFor("/blog/fora-do-ar"), { template, environment, fetcher: async () => new Response(null, { status: 404 }) });
+  assert.equal(missing.status, 404);
+  assert.equal(missing.headers.get("X-Robots-Tag"), "noindex, nofollow");
+  assert.ok(!(await missing.text()).includes('rel="canonical"'));
+  const unavailable = await pageResponse(requestFor("/blog/qualquer"), { template, environment, fetcher: async () => { throw new Error("Timeout"); } });
+  assert.equal(unavailable.status, 503);
+  assert.equal(unavailable.headers.get("Cache-Control"), "no-store");
+});
+
 test("SEO cadastrado é priorizado e escapado sem injetar HTML ou script", async () => {
   const response = await pageResponse(requestFor("/cursos/mopp"), {
     template, environment,
@@ -82,6 +133,7 @@ for (const path of [
   "/admin/cursos", "/admin/cursos/novo", "/admin/cursos/1/editar",
   "/admin/depoimentos", "/admin/depoimentos/novo", "/admin/depoimentos/1/editar",
   "/admin/faqs", "/admin/faqs/novo", "/admin/faqs/1/editar",
+  "/admin/blog", "/admin/blog/novo", "/admin/blog/1/editar", "/admin/blog/comentarios",
   "/admin/midias", "/admin/aparencia", "/admin/atendimentos", "/admin/configuracoes", "/admin/logs",
 ]) {
   test(`${path}: HTML e cabeçalho continuam bloqueados, sem canonical`, async () => {
@@ -96,7 +148,7 @@ for (const path of [
 }
 
 test("URLs inexistentes e rotas privadas desconhecidas têm HTTP 404 e noindex", async () => {
-  for (const path of ["/nao-existe", "/login", "/api/unknown", "/cursos/mopp/segredo"]) {
+  for (const path of ["/nao-existe", "/login", "/api/unknown", "/cursos/mopp/segredo", "/blog/artigo/segredo"]) {
     const response = await pageResponse(requestFor(path), { template, environment, fetcher: forbiddenFetch });
     assert.equal(response.status, 404);
     assert.equal(response.headers.get("X-Robots-Tag"), "noindex, nofollow");
@@ -153,6 +205,8 @@ test("template ausente ou incompatível falha de forma segura", async () => {
 
 test("carregamento transitório de curso não injeta noindex em página pública", () => {
   assert.equal(robotsDirective("loading", true), null);
+  assert.equal(robotsDirective("loading-article", true), null);
+  assert.equal(robotsDirective("blog-post", true), "index, follow");
   for (const page of ["admin", "not-found", "error", "unknown"]) {
     assert.equal(robotsDirective(page, true), "noindex, nofollow");
   }

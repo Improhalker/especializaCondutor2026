@@ -11,8 +11,8 @@ test("paginação aceita Laravel antigo, novo e respostas ausentes", () => {
   assert.deepEqual(normalizeAttendance({}).clicks.data, [])
 })
 test("apenas rotas públicas podem ser coletadas", () => {
-  for (const path of ["/", "/cursos", "/cursos/mopp", "/quem-somos", "/politica-de-privacidade", "/termos-de-uso"]) assert.equal(PUBLIC_ANALYTICS_PATH.test(path), true)
-  for (const path of ["/admin", "/api/home", "/login", "/cursos/mopp?email=x", "/outra"]) assert.equal(PUBLIC_ANALYTICS_PATH.test(path), false)
+  for (const path of ["/", "/cursos", "/cursos/mopp", "/blog", "/blog/como-renovar-mopp", "/quem-somos", "/politica-de-privacidade", "/termos-de-uso"]) assert.equal(PUBLIC_ANALYTICS_PATH.test(path), true)
+  for (const path of ["/admin", "/api/home", "/login", "/cursos/mopp?email=x", "/blog/Artigo", "/outra"]) assert.equal(PUBLIC_ANALYTICS_PATH.test(path), false)
 })
 test("campanhas e rótulos não levam queries ou HTML para a coleta", () => {
   assert.equal(campaignValue(" Formação MOPP "), "Formação MOPP")

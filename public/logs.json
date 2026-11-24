@@ -178,5 +178,10 @@
     "id": 36,
     "date": "2026-11-12",
     "content": "Revisado o SEO das páginas públicas: entrega de HTML com título, descrição, canonical e diretivas de indexação por rota na Vercel, usando os dados da API Laravel. Sitemap e canonical alinhados ao domínio HTTPS com www atualmente usado em produção. Preservados noindex de admin, login, API, erros e previews; adicionados status 404/503 reais e testes de regressão, sem alterar layout ou funcionalidades comerciais."
+  },
+  {
+    "id": 37,
+    "date": "2026-11-24",
+    "content": "Adicionado o módulo de blog: páginas /blog e /blog/:slug com SEO e conteúdo no HTML inicial (Laravel e Vercel), sitemap, CTA para curso ou WhatsApp, artigos relacionados, próximo artigo, depoimentos e cursos sugeridos. No painel: artigos com rascunho, prévia, publicação e retirada do ar, HTML sanitizado no Laravel e imagens da biblioteca protegidas contra exclusão. Comentários sem conta com moderação obrigatória e limite de envios."
   }
 ]

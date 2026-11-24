@@ -246,3 +246,40 @@ export function uploadAdminMedia(
   });
   return request("/admin/media", { method: "POST", body, onUploadProgress });
 }
+
+const query = (params = {}) =>
+  new URLSearchParams(
+    Object.entries(params).filter(
+      ([, value]) => value !== "" && value !== null && value !== undefined,
+    ),
+  ).toString();
+export const getAdminBlogPosts = (params = {}) =>
+  request(`/admin/blog/posts?${query(params)}`);
+export const getAdminBlogPost = (id) => request(`/admin/blog/posts/${id}`);
+export const createAdminBlogPost = (payload) =>
+  request("/admin/blog/posts", { method: "POST", body: JSON.stringify(payload) });
+export const updateAdminBlogPost = (id, payload) =>
+  request(`/admin/blog/posts/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(payload),
+  });
+export const updateBlogPostPublication = (id, status) =>
+  request(`/admin/blog/posts/${id}/publication`, {
+    method: "PATCH",
+    body: JSON.stringify({ status }),
+  });
+export const deleteAdminBlogPost = (id) =>
+  request(`/admin/blog/posts/${id}`, { method: "DELETE" });
+export const previewAdminBlogBody = (body) =>
+  request("/admin/blog/preview", {
+    method: "POST",
+    body: JSON.stringify({ body }),
+  });
+export const getAdminBlogCategories = () => request("/admin/blog/categories");
+export const getAdminBlogComments = (params = {}) =>
+  request(`/admin/blog/comments?${query(params)}`);
+export const updateAdminBlogComment = (id, status) =>
+  request(`/admin/blog/comments/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({ status }),
+  });

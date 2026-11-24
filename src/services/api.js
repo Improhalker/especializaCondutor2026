@@ -42,6 +42,34 @@ export async function getCourses() {
 export async function getCourse(slug) {
   return (await request(`/courses/${encodeURIComponent(slug)}`)).data;
 }
+export const getBlogPosts = (page = 1, perPage = 9) =>
+  request(`/blog/posts?page=${encodeURIComponent(page)}&per_page=${perPage}`);
+export const getBlogPost = (slug) =>
+  request(`/blog/posts/${encodeURIComponent(slug)}`);
+export const getBlogComments = (slug, page = 1) =>
+  request(`/blog/posts/${encodeURIComponent(slug)}/comments?page=${encodeURIComponent(page)}`);
+export async function postBlogComment(slug, payload) {
+  const response = await fetch(
+    `${API_URL}/blog/posts/${encodeURIComponent(slug)}/comments`,
+    {
+      method: "POST",
+      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    },
+  );
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const error = new Error(
+      response.status === 429
+        ? "Você enviou muitos comentários em pouco tempo. Aguarde alguns minutos e tente novamente."
+        : body.message || "Não foi possível enviar seu comentário agora.",
+    );
+    error.status = response.status;
+    error.errors = body.errors || {};
+    throw error;
+  }
+  return body;
+}
 export const whatsappUrl = (message) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 export async function trackWhatsAppClick(payload) {

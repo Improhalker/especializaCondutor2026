@@ -8,6 +8,8 @@ import CourseView from "../views/CourseView.vue";
 import AboutView from "../views/AboutView.vue";
 import PrivacyView from "../views/PrivacyView.vue";
 import TermsView from "../views/TermsView.vue";
+import BlogView from "../views/BlogView.vue";
+import BlogPostView from "../views/BlogPostView.vue";
 import AdminLayout from "../components/admin/AdminLayout.vue";
 import AdminLoginView from "../views/admin/AdminLoginView.vue";
 import AdminDashboardView from "../views/admin/AdminDashboardView.vue";
@@ -22,6 +24,9 @@ import AdminMediaView from "../views/admin/AdminMediaView.vue";
 import AdminAppearanceView from "../views/admin/AdminAppearanceView.vue";
 import AdminSettingsView from "../views/admin/AdminSettingsView.vue";
 import AdminLogsView from "../views/admin/AdminLogsView.vue";
+import AdminBlogPostsView from "../views/admin/AdminBlogPostsView.vue";
+import AdminBlogPostFormView from "../views/admin/AdminBlogPostFormView.vue";
+import AdminBlogCommentsView from "../views/admin/AdminBlogCommentsView.vue";
 import AdminInitialPasswordView from "../views/admin/AdminInitialPasswordView.vue";
 import { adminSession } from "../services/adminSession";
 
@@ -39,6 +44,13 @@ const router = createRouter({
       path: "/cursos/:slug",
       name: "course",
       component: CourseView,
+      props: true,
+    },
+    { path: INDEXABLE_PAGES.blog, name: "blog", component: BlogView },
+    {
+      path: "/blog/:slug",
+      name: "blog-post",
+      component: BlogPostView,
       props: true,
     },
     {
@@ -101,6 +113,31 @@ const router = createRouter({
           component: AdminTestimonialFormView,
           props: true,
           meta: { title: "Editar depoimento" },
+        },
+        {
+          path: "blog",
+          name: "admin-blog",
+          component: AdminBlogPostsView,
+          meta: { title: "Blog" },
+        },
+        {
+          path: "blog/novo",
+          name: "admin-blog-new",
+          component: AdminBlogPostFormView,
+          meta: { title: "Novo artigo" },
+        },
+        {
+          path: "blog/:id/editar",
+          name: "admin-blog-edit",
+          component: AdminBlogPostFormView,
+          props: true,
+          meta: { title: "Editar artigo" },
+        },
+        {
+          path: "blog/comentarios",
+          name: "admin-blog-comments",
+          component: AdminBlogCommentsView,
+          meta: { title: "Comentários do blog" },
         },
         {
           path: "faqs",
@@ -181,15 +218,18 @@ router.beforeEach((to) => {
 
 router.afterEach((to, from) => {
   if (
-    to.name === "course" &&
-    from.name === "course" &&
+    ["course", "blog-post"].includes(to.name) &&
+    from.name === to.name &&
     to.params.slug === from.params.slug
   )
     return;
+  if (to.name === "blog" && from.name === "blog") return;
   setPageSeo(
     to.name === "course"
       ? "loading"
-      : to.path.startsWith("/admin")
+      : to.name === "blog-post"
+        ? "loading-article"
+        : to.path.startsWith("/admin")
         ? "admin"
         : to.name,
   );

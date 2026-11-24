@@ -77,6 +77,7 @@ watch(
           >
             <RouterLink to="/">Início</RouterLink
             ><RouterLink to="/cursos">Cursos</RouterLink
+            ><RouterLink to="/blog">Blog</RouterLink
             ><RouterLink to="/quem-somos">Quem somos</RouterLink>
             <a v-if="isHome" href="#como-funciona" @click="menuOpen = false"
               >Como funciona</a
@@ -116,6 +117,7 @@ watch(
             <p class="footer-title">Navegue</p>
             <RouterLink to="/">Início</RouterLink
             ><RouterLink to="/cursos">Cursos</RouterLink
+            ><RouterLink to="/blog">Blog</RouterLink
             ><RouterLink to="/quem-somos">Quem somos</RouterLink>
           </div>
           <div>

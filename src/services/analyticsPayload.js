@@ -1,4 +1,4 @@
-export const PUBLIC_ANALYTICS_PATH = /^\/(?:cursos(?:\/[a-z0-9-]+)?|quem-somos|politica-de-privacidade|termos-de-uso)?$/
+export const PUBLIC_ANALYTICS_PATH = /^\/(?:cursos(?:\/[a-z0-9-]+)?|blog(?:\/[a-z0-9-]+)?|quem-somos|politica-de-privacidade|termos-de-uso)?$/
 
 export function campaignValue(value) {
   const text = typeof value === "string" ? value.trim().slice(0, 80) : ""

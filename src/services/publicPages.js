@@ -5,6 +5,7 @@ export const SITE_ORIGIN = "https://www.especializacondutor.com.br";
 export const INDEXABLE_PAGES = Object.freeze({
   home: "/",
   courses: "/cursos",
+  blog: "/blog",
   about: "/quem-somos",
   privacy: "/politica-de-privacidade",
   terms: "/termos-de-uso",

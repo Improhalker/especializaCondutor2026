@@ -41,6 +41,13 @@
           matrícula. Hoje o site não possui formulário público de e-mail, área de
           aluno ou pagamento online.
         </p>
+        <p>
+          Nos comentários do blog, guardamos apenas o nome de exibição e a
+          mensagem que você enviar. Todo comentário passa por moderação antes de
+          aparecer. O endereço IP não é salvo junto com o comentário; ele é usado
+          por poucos minutos apenas para limitar envios em excesso. Não inclua telefone, e-mail ou
+          outros dados pessoais no texto.
+        </p>
       </section>
 
       <section aria-labelledby="privacy-purpose">

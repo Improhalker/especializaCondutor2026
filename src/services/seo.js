@@ -9,6 +9,8 @@ const descriptions = {
     "Conheça a Especializa Condutor, nossa forma de atendimento e a jornada que já ajudou mais de 70 motoristas a avançarem em sua especialização.",
   privacy:
     "Saiba quais dados a Especializa Condutor usa na navegação e no atendimento, e como falar conosco sobre sua privacidade.",
+  blog:
+    "Artigos e orientações para motoristas sobre cursos especializados, formação, atualização e rotina profissional.",
   terms:
     "Entenda como funciona a vitrine de cursos da Especializa Condutor e o atendimento para matrícula pelo WhatsApp.",
   "not-found":
@@ -41,6 +43,7 @@ export function pageMetadata(page, course = null, origin = null) {
   const names = {
     home: "Cursos para motoristas",
     courses: "Cursos",
+    blog: "Blog",
     about: "Quem somos",
     privacy: "Política de Privacidade",
     terms: "Termos de Uso",
@@ -48,11 +51,15 @@ export function pageMetadata(page, course = null, origin = null) {
     error: "Não foi possível carregar a página",
     admin: "Administração",
     loading: "Carregando curso",
+    "loading-article": "Carregando artigo",
   };
+  const post = page === "blog-post" ? course : null;
   const rawTitle =
     page === "course"
       ? course?.meta_title?.trim() || course?.name
-      : names[page];
+      : post
+        ? post.meta_title?.trim() || post.title
+        : names[page];
   const title =
     (rawTitle || "Cursos")
       .replace(/(?:\s*[|—–-]\s*)?Especializa Condutor\s*$/iu, "")
@@ -62,11 +69,17 @@ export function pageMetadata(page, course = null, origin = null) {
       ? course?.meta_description?.trim() ||
         course?.summary?.trim() ||
         `Conheça o curso ${course?.name} e consulte informações com a equipe do Especializa Condutor.`
-      : descriptions[page] || "Administração do Especializa Condutor.";
+      : post
+        ? post.meta_description?.trim() ||
+          post.excerpt?.trim() ||
+          "Leia o artigo no blog do Especializa Condutor."
+        : descriptions[page] || "Administração do Especializa Condutor.";
   const path =
     page === "course"
       ? `/cursos/${encodeURIComponent(course.slug)}`
-      : INDEXABLE_PAGES[page] || null;
+      : post
+        ? `/blog/${encodeURIComponent(post.slug)}`
+        : INDEXABLE_PAGES[page] || null;
   let image = null;
   const source =
     course?.cover?.url || (origin ? "/brand/especializa-condutor.png" : null);
@@ -88,6 +101,8 @@ export function pageMetadata(page, course = null, origin = null) {
     image,
     imageAlt: course?.cover?.alt_text || brand,
     public: Boolean(path),
+    type: post ? "article" : "website",
+    publishedTime: post?.published_at || null,
   };
 }
 function meta(attribute, key, content) {
@@ -106,8 +121,9 @@ function meta(attribute, key, content) {
 }
 export function robotsDirective(page, indexable) {
   // Loading is temporary, not evidence that a public course must be excluded.
-  if (page === "loading" && indexable) return null;
-  return indexable && (Object.hasOwn(INDEXABLE_PAGES, page) || page === "course")
+  if ((page === "loading" || page === "loading-article") && indexable) return null;
+  return indexable &&
+    (Object.hasOwn(INDEXABLE_PAGES, page) || page === "course" || page === "blog-post")
     ? "index, follow"
     : "noindex, nofollow";
 }
@@ -136,7 +152,7 @@ export function setPageSeo(page, course = null) {
     title: data.title,
     description: data.description,
     url: data.canonical,
-    type: "website",
+    type: data.type,
     image: data.image,
     "image:alt": data.image ? data.imageAlt : null,
     locale: "pt_BR",
@@ -151,6 +167,7 @@ export function setPageSeo(page, course = null) {
     "image:alt": data.image ? data.imageAlt : null,
   }))
     meta("name", `twitter:${key}`, value);
+  meta("property", "article:published_time", data.publishedTime);
   const canonicals = [
     ...document.head.querySelectorAll('link[rel="canonical"]'),
   ];
