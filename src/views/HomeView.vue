@@ -3,6 +3,7 @@ import { onMounted, onBeforeUnmount, nextTick, ref } from "vue";
 import { getHome, whatsappUrl } from "../services/api";
 import CourseCard from "../components/CourseCard.vue";
 import CourseSupportSections from "../components/CourseSupportSections.vue";
+import BlogHighlights from "../components/blog/BlogHighlights.vue";
 import HeroSection from "../components/HeroSection.vue";
 import WhatsAppIcon from "../components/WhatsAppIcon.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
@@ -133,6 +134,12 @@ function talkAbout(course = "") {
     <CourseSupportSections
       :testimonials="data.testimonials"
       :faqs="data.faqs"
+    />
+    <BlogHighlights
+      eyebrow="DO BLOG"
+      title="Conteúdo para quem vive a estrada."
+      description="Orientações sobre cursos, requisitos e o dia a dia do motorista profissional."
+      source="Home"
     />
   </div>
 </template>

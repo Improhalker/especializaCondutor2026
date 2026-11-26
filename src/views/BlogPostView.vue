@@ -4,14 +4,16 @@ import { getBlogPost, trackWhatsAppClick, whatsappUrl } from "../services/api";
 import { setPageSeo } from "../services/seo";
 import BlogArticleContent from "../components/blog/BlogArticleContent.vue";
 import BlogComments from "../components/blog/BlogComments.vue";
-import BlogPostCard from "../components/blog/BlogPostCard.vue";
+import BlogShare from "../components/blog/BlogShare.vue";
 import BlogTestimonials from "../components/blog/BlogTestimonials.vue";
 import CourseCard from "../components/CourseCard.vue";
 import PublicErrorState from "../components/PublicErrorState.vue";
 import SkeletonText from "../components/loading/SkeletonText.vue";
 import SkeletonBase from "../components/loading/SkeletonBase.vue";
 import WhatsAppIcon from "../components/WhatsAppIcon.vue";
+import MediaImage from "../components/admin/media/MediaImage.vue";
 import { waitForSkeleton } from "../components/loading/waitForSkeleton";
+import { formatPostDate } from "../services/blogFormat";
 import NotFoundView from "./NotFoundView.vue";
 
 const props = defineProps({ slug: { type: String, required: true } });
@@ -79,74 +81,96 @@ function openWhatsApp() {
     <PublicErrorState @retry="load" />
   </div>
   <div v-else-if="post" class="content-fade-in">
-    <div class="container blog-article-wrap">
-      <BlogArticleContent :post="post" />
+    <div class="container blog-article-wrap blog-layout">
+      <div class="blog-main">
+        <BlogArticleContent :post="post" />
 
-      <aside v-if="cta" class="blog-course-cta" aria-labelledby="blog-course-cta-title">
-        <div>
-          <p class="eyebrow light">CURSO RELACIONADO</p>
-          <h2 id="blog-course-cta-title">{{ course.name }}</h2>
-          <p v-if="course.summary">{{ course.summary }}</p>
-        </div>
-        <button
-          v-if="cta.action === 'whatsapp'"
-          class="button button-white"
-          type="button"
-          data-analytics-kind="whatsapp"
-          :data-analytics-label="`WhatsApp · Blog · ${course.name}`"
-          @click="openWhatsApp"
-        >
-          <WhatsAppIcon /> {{ cta.label }}
-        </button>
-        <RouterLink
-          v-else
-          class="button button-white"
-          :to="`/cursos/${encodeURIComponent(course.slug)}`"
-          data-analytics-kind="navigation"
-          :data-analytics-label="`Blog · Artigo para curso · ${course.name}`"
-          >{{ cta.label }} <span aria-hidden="true">→</span></RouterLink
-        >
+        <BlogShare class="blog-share-inline" :title="post.title" :slug="post.slug" />
+
+        <aside v-if="cta" class="blog-course-cta" aria-labelledby="blog-course-cta-title">
+          <div>
+            <p class="eyebrow light">CURSO RELACIONADO</p>
+            <h2 id="blog-course-cta-title">{{ course.name }}</h2>
+            <p v-if="course.summary">{{ course.summary }}</p>
+          </div>
+          <button
+            v-if="cta.action === 'whatsapp'"
+            class="button button-white"
+            type="button"
+            data-analytics-kind="whatsapp"
+            :data-analytics-label="`WhatsApp · Blog · ${course.name}`"
+            @click="openWhatsApp"
+          >
+            <WhatsAppIcon /> {{ cta.label }}
+          </button>
+          <RouterLink
+            v-else
+            class="button button-white"
+            :to="`/cursos/${encodeURIComponent(course.slug)}`"
+            data-analytics-kind="navigation"
+            :data-analytics-label="`Blog · Artigo para curso · ${course.name}`"
+            >{{ cta.label }} <span aria-hidden="true">→</span></RouterLink
+          >
+        </aside>
+
+        <nav class="blog-next" aria-label="Continuar lendo">
+          <RouterLink
+            v-if="extra.next"
+            class="blog-next-link"
+            :to="`/blog/${encodeURIComponent(extra.next.slug)}`"
+            data-analytics-kind="navigation"
+            data-analytics-label="Blog · Próximo artigo"
+          >
+            <small>Próximo artigo</small>
+            <strong>{{ extra.next.title }}</strong>
+            <span aria-hidden="true">→</span>
+          </RouterLink>
+          <RouterLink
+            v-else
+            class="blog-next-link"
+            to="/blog"
+            data-analytics-kind="navigation"
+            data-analytics-label="Blog · Ver todos os artigos"
+          >
+            <small>Você chegou ao fim da lista</small>
+            <strong>Ver todos os artigos</strong>
+            <span aria-hidden="true">→</span>
+          </RouterLink>
+        </nav>
+      </div>
+
+      <aside class="blog-sidebar" aria-label="Mais sobre este artigo">
+        <section v-if="extra.related.length" class="blog-sidebar-block" aria-labelledby="blog-related-title">
+          <h2 id="blog-related-title" class="blog-sidebar-title">Artigos relacionados</h2>
+          <ul class="blog-related-list">
+            <li v-for="item in extra.related" :key="item.id">
+              <RouterLink
+                class="blog-related-item"
+                :to="`/blog/${encodeURIComponent(item.slug)}`"
+                data-analytics-kind="navigation"
+                :data-analytics-label="`Blog · Relacionado · ${item.title}`"
+              >
+                <span v-if="item.cover?.url" class="blog-related-thumb">
+                  <MediaImage :src="item.cover.url" alt="" :width="item.cover.width" :height="item.cover.height" />
+                </span>
+                <span class="blog-related-text">
+                  <small v-if="item.category">{{ item.category }}</small>
+                  <strong>{{ item.title }}</strong>
+                  <time :datetime="item.published_at">{{ formatPostDate(item.published_at) }}</time>
+                </span>
+              </RouterLink>
+            </li>
+          </ul>
+          <RouterLink class="text-link blog-sidebar-more" to="/blog">Ver todos os artigos <span aria-hidden="true">→</span></RouterLink>
+        </section>
+
+        <BlogTestimonials />
+
+        <BlogShare class="blog-sidebar-block blog-share-side" :title="post.title" :slug="post.slug" />
       </aside>
 
-      <nav class="blog-next" aria-label="Continuar lendo">
-        <RouterLink
-          v-if="extra.next"
-          class="blog-next-link"
-          :to="`/blog/${encodeURIComponent(extra.next.slug)}`"
-          data-analytics-kind="navigation"
-          data-analytics-label="Blog · Próximo artigo"
-        >
-          <small>Próximo artigo</small>
-          <strong>{{ extra.next.title }}</strong>
-          <span aria-hidden="true">→</span>
-        </RouterLink>
-        <RouterLink
-          v-else
-          class="blog-next-link"
-          to="/blog"
-          data-analytics-kind="navigation"
-          data-analytics-label="Blog · Ver todos os artigos"
-        >
-          <small>Você chegou ao fim da lista</small>
-          <strong>Ver todos os artigos</strong>
-          <span aria-hidden="true">→</span>
-        </RouterLink>
-      </nav>
-
-      <BlogComments :slug="post.slug" />
+      <BlogComments class="blog-layout-comments" :slug="post.slug" />
     </div>
-
-    <section v-if="extra.related.length" class="section container blog-related" aria-labelledby="blog-related-title">
-      <div class="section-heading">
-        <p class="eyebrow">CONTINUE LENDO</p>
-        <h2 id="blog-related-title">Artigos relacionados</h2>
-      </div>
-      <div class="blog-grid">
-        <BlogPostCard v-for="item in extra.related" :key="item.id" :post="item" heading-level="h3" />
-      </div>
-    </section>
-
-    <BlogTestimonials />
 
     <section
       v-if="extra.suggested_courses.length"

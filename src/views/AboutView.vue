@@ -1,6 +1,8 @@
 <script setup>
 import { ArrowRight, BadgeCheck, HeartHandshake, Route, UsersRound } from "lucide-vue-next";
 import WhatsAppIcon from "../components/WhatsAppIcon.vue";
+import ProcessJourney from "../components/ProcessJourney.vue";
+import BlogHighlights from "../components/blog/BlogHighlights.vue";
 import { trackWhatsAppClick, whatsappUrl } from "../services/api";
 
 function talkToTeam() {
@@ -157,5 +159,19 @@ function talkToTeam() {
         </div>
       </div>
     </section>
+
+    <section class="section container process about-process" aria-labelledby="about-process-title">
+      <div class="section-heading" v-reveal>
+        <p class="eyebrow">COMO FUNCIONA</p>
+        <h2 id="about-process-title">Da escolha do curso ao seu próximo passo.</h2>
+      </div>
+      <ProcessJourney />
+    </section>
+
+    <BlogHighlights
+      eyebrow="DO BLOG"
+      title="Leituras para planejar sua especialização."
+      source="Quem somos"
+    />
   </div>
 </template>

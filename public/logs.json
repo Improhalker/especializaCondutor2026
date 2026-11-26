@@ -183,5 +183,10 @@
     "id": 37,
     "date": "2026-11-24",
     "content": "Adicionado o módulo de blog: páginas /blog e /blog/:slug com SEO e conteúdo no HTML inicial (Laravel e Vercel), sitemap, CTA para curso ou WhatsApp, artigos relacionados, próximo artigo, depoimentos e cursos sugeridos. No painel: artigos com rascunho, prévia, publicação e retirada do ar, HTML sanitizado no Laravel e imagens da biblioteca protegidas contra exclusão. Comentários sem conta com moderação obrigatória e limite de envios."
+  },
+  {
+    "id": 38,
+    "date": "2026-11-26",
+    "content": "Blog: seção com os artigos mais recentes na Home e em Quem somos (oculta quando não há artigos); Quem somos ganhou a seção branca \"Como funciona\" após o CTA azul; artigo passou a ter layout 75/25 com artigos relacionados, depoimentos e compartilhamento (WhatsApp, Facebook, LinkedIn, X e copiar link) na lateral."
   }
 ]
